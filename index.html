@@ -3,103 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Grafik Digital Quest - permainan pembelajaran interaktif untuk Asas Grafik Digital.">
+  <meta name="description" content="Grafik Digital Quest — permainan pembelajaran interaktif untuk Asas Grafik Digital.">
   <title>Grafik Digital Quest</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./game.js" defer></script>
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="#" aria-label="Grafik Digital Quest halaman utama">
+    <a class="brand" href="#" id="brand-home" aria-label="Grafik Digital Quest halaman utama">
       <span class="brand-mark">GD</span>
       <span>GRAFIK DIGITAL <strong>QUEST</strong></span>
     </a>
-    <span class="header-pill"><span class="status-dot"></span> MOD PEMBELAJARAN</span>
+    <div class="header-actions">
+      <span class="header-pill"><span class="status-dot"></span> <span id="header-mode">MOD PEMBELAJARAN</span></span>
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">EN</button>
+    </div>
   </header>
 
   <main class="container">
     <section id="home-screen" class="screen active">
       <div class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">TOPIK 1.2 · ASAS GRAFIK DIGITAL</p>
-          <h1>Teroka dunia<br><span>Grafik Digital.</span></h1>
-          <p class="hero-description">
-            Selesaikan misi, kenal pasti sumber bahan grafik dan kuasai
-            perkakasan yang digunakan dalam penghasilan grafik digital.
-          </p>
-          <button class="button button-primary" id="start-first">Mula Bermain <span aria-hidden="true">↗</span></button>
-          <div class="hero-meta">
-            <span>✦ 3 Misi</span><span>✦ 15 Soalan</span><span>✦ Main Percuma</span>
-          </div>
+          <p class="eyebrow" id="hero-eyebrow">TOPIK 1.2 · ASAS GRAFIK DIGITAL</p>
+          <h1 id="hero-title">Teroka dunia<br><span>Grafik Digital.</span></h1>
+          <p class="hero-description" id="hero-description">Selesaikan misi, kenal pasti sumber bahan grafik dan kuasai perkakasan yang digunakan dalam penghasilan grafik digital.</p>
+          <button class="button button-primary" id="start-first" type="button">Mula Bermain <span aria-hidden="true">↗</span></button>
+          <div class="hero-meta"><span id="meta-missions">✦ 3 Misi</span><span id="meta-questions">✦ 15 Soalan</span><span id="meta-free">✦ Main Percuma</span></div>
         </div>
         <div class="hero-visual" aria-label="Ilustrasi komputer dan alat grafik" role="img">
           <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <div class="floating-icon icon-camera">📷</div>
-          <div class="floating-icon icon-pencil">✏️</div>
-          <div class="floating-icon icon-image">🖼️</div>
-          <div class="monitor">
-            <div class="monitor-top"><span></span><span></span><span></span></div>
-            <div class="monitor-screen">
-              <div class="screen-sun"></div><div class="screen-mountain mountain-one"></div>
-              <div class="screen-mountain mountain-two"></div>
-              <div class="screen-line"></div>
-            </div>
-            <div class="monitor-neck"></div><div class="monitor-base"></div>
-          </div>
+          <div class="floating-icon icon-camera">📷</div><div class="floating-icon icon-pencil">✏️</div><div class="floating-icon icon-image">🖼️</div>
+          <div class="monitor"><div class="monitor-top"><span></span><span></span><span></span></div><div class="monitor-screen"><div class="screen-sun"></div><div class="screen-mountain mountain-one"></div><div class="screen-mountain mountain-two"></div><div class="screen-line"></div></div><div class="monitor-neck"></div><div class="monitor-base"></div></div>
           <div class="visual-caption">CREATE · EXPLORE · MASTER</div>
         </div>
       </div>
 
       <div class="section-heading">
-        <div><p class="eyebrow">PILIH PENGEMBARAAN</p><h2>Pilih misi anda</h2></div>
-        <p class="muted">Kumpul mata dan uji pengetahuan anda.</p>
+        <div><p class="eyebrow" id="choose-eyebrow">PILIH PENGEMBARAAN</p><h2 id="choose-title">Pilih misi anda</h2></div>
+        <p class="muted" id="choose-description">Kumpul mata dan uji pengetahuan anda.</p>
       </div>
 
       <div class="mission-grid">
         <article class="mission-card">
-          <div class="mission-top"><span class="mission-icon">🖼️</span><span class="mission-number">MISI 01</span></div>
-          <h3>Pencari Grafik</h3>
-          <p>Kenal pasti sumber pemerolehan bahan grafik seperti fotografi, laman web dan lukisan digital.</p>
-          <button class="button button-secondary mission-button" data-mission="0">Mula Misi <span>→</span></button>
+          <div class="mission-top"><span class="mission-icon">🖼️</span><span class="mission-number" id="mission-label-0">MISI 01</span></div>
+          <h3 id="mission-name-0">Pencari Grafik</h3>
+          <p id="mission-desc-0">Kenal pasti sumber pemerolehan bahan grafik seperti fotografi, laman web dan lukisan digital.</p>
+          <button class="button button-secondary mission-button" data-mission="0" type="button" id="mission-button-0">Mula Misi <span>→</span></button>
         </article>
         <article class="mission-card">
-          <div class="mission-top"><span class="mission-icon">🖥️</span><span class="mission-number">MISI 02</span></div>
-          <h3>Pakar Perkakasan</h3>
-          <p>Pelajari fungsi dan spesifikasi komputer, kamera, pengimbas, pencetak dan tablet grafik.</p>
-          <button class="button button-secondary mission-button" data-mission="1">Mula Misi <span>→</span></button>
+          <div class="mission-top"><span class="mission-icon">🖥️</span><span class="mission-number" id="mission-label-1">MISI 02</span></div>
+          <h3 id="mission-name-1">Pakar Perkakasan</h3>
+          <p id="mission-desc-1">Pelajari fungsi dan spesifikasi komputer, kamera, pengimbas, pencetak dan tablet grafik.</p>
+          <button class="button button-secondary mission-button" data-mission="1" type="button" id="mission-button-1">Mula Misi <span>→</span></button>
         </article>
         <article class="mission-card">
-          <div class="mission-top"><span class="mission-icon">🏆</span><span class="mission-number">MISI 03</span></div>
-          <h3>Cabaran Pakar</h3>
-          <p>Aplikasikan pengetahuan dalam situasi sebenar berkaitan penghasilan grafik digital.</p>
-          <button class="button button-secondary mission-button" data-mission="2">Mula Misi <span>→</span></button>
+          <div class="mission-top"><span class="mission-icon">🏆</span><span class="mission-number" id="mission-label-2">MISI 03</span></div>
+          <h3 id="mission-name-2">Cabaran Pakar</h3>
+          <p id="mission-desc-2">Aplikasikan pengetahuan dalam situasi sebenar berkaitan penghasilan grafik digital.</p>
+          <button class="button button-secondary mission-button" data-mission="2" type="button" id="mission-button-2">Mula Misi <span>→</span></button>
         </article>
       </div>
 
       <section class="learning-panel">
         <div class="learning-icon">📚</div>
         <div>
-          <p class="eyebrow">HASIL PEMBELAJARAN</p>
-          <h2>Apa yang akan dipelajari?</h2>
+          <p class="eyebrow" id="learning-eyebrow">HASIL PEMBELAJARAN</p>
+          <h2 id="learning-title">Apa yang akan dipelajari?</h2>
           <ul>
-            <li><strong>1.2.1</strong> Menyenaraikan sumber pemerolehan bahan grafik.</li>
-            <li><strong>1.2.2</strong> Menjelaskan fungsi dan spesifikasi perkakasan grafik digital.</li>
-            <li>Mengenal pasti komputer, kamera digital, pengimbas, pencetak dan tablet grafik.</li>
+            <li id="learning-outcome-1"><strong>1.2.1</strong> Menyenaraikan sumber pemerolehan bahan grafik.</li>
+            <li id="learning-outcome-2"><strong>1.2.2</strong> Menjelaskan fungsi dan spesifikasi perkakasan grafik digital.</li>
+            <li id="learning-outcome-3">Mengenal pasti komputer, kamera digital, pengimbas, pencetak dan tablet grafik.</li>
           </ul>
         </div>
       </section>
     </section>
 
+    <section id="name-screen" class="screen" aria-labelledby="name-title">
+      <button class="text-button" id="name-back" type="button">← Kembali ke menu utama</button>
+      <div class="name-card">
+        <div class="name-avatar">🎮</div>
+        <p class="eyebrow" id="name-eyebrow">SEDIA UNTUK BERMAIN?</p>
+        <h1 id="name-title">Masukkan nama<br><span>pemain.</span></h1>
+        <p class="muted" id="name-description">Nama anda akan dipaparkan pada skrin permainan dan keputusan.</p>
+        <form id="name-form">
+          <label for="player-name" id="name-label">NAMA PEMAIN</label>
+          <input id="player-name" name="player-name" type="text" maxlength="30" autocomplete="given-name" placeholder="Contoh: Aina" required>
+          <p class="form-error" id="name-error" aria-live="polite"></p>
+          <button class="button button-primary" id="begin-game" type="submit">Teruskan ke permainan →</button>
+        </form>
+      </div>
+    </section>
+
     <section id="game-screen" class="screen" aria-live="polite">
-      <button class="text-button" id="back-home">← Kembali ke menu utama</button>
+      <button class="text-button" id="back-home" type="button">← Kembali ke menu utama</button>
+      <p class="player-greeting" id="player-greeting"></p>
       <div class="game-status">
-        <div class="status-card"><span>MISI</span><strong id="mission-title">Pencari Grafik</strong></div>
-        <div class="status-card"><span>SKOR</span><strong id="score">0</strong></div>
-        <div class="status-card"><span>NYAWA</span><strong id="lives">♥ ♥ ♥</strong></div>
+        <div class="status-card"><span id="status-mission-label">MISI</span><strong id="mission-title">Pencari Grafik</strong></div>
+        <div class="status-card"><span id="status-score-label">SKOR</span><strong id="score">0</strong></div>
+        <div class="status-card"><span id="status-lives-label">NYAWA</span><strong id="lives">♥ ♥ ♥</strong></div>
       </div>
       <div class="progress-info"><span id="question-counter">SOALAN 1 / 5</span><span id="progress-percent">0%</span></div>
       <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
-
       <div class="question-card">
         <div class="question-label" id="question-label">1.2.1 · SUMBER BAHAN GRAFIK</div>
         <h2 id="question-text">Soalan akan dipaparkan di sini.</h2>
@@ -107,7 +111,7 @@
         <div class="feedback" id="feedback" role="status"></div>
         <div class="question-footer">
           <span class="muted" id="question-hint">Pilih satu jawapan yang paling tepat.</span>
-          <button class="button button-primary" id="next-question" disabled>Seterusnya →</button>
+          <button class="button button-primary" id="next-question" type="button" disabled>Seterusnya →</button>
         </div>
       </div>
     </section>
@@ -115,23 +119,21 @@
     <section id="result-screen" class="screen">
       <div class="result-card">
         <div class="result-medal" id="result-icon">🏆</div>
-        <p class="eyebrow">MISI SELESAI</p>
+        <p class="eyebrow" id="result-eyebrow">MISI SELESAI</p>
         <h1 id="result-title">Tahniah!</h1>
         <p class="muted" id="result-message">Anda telah menamatkan cabaran.</p>
+        <p class="result-player" id="result-player"></p>
         <div class="result-score" id="final-score">0</div>
-        <p class="result-score-label">JUMLAH MATA</p>
-        <div class="result-stats"><span>Jawapan betul</span><strong id="correct-count">0/5</strong></div>
+        <p class="result-score-label" id="result-score-label">JUMLAH MATA</p>
+        <div class="result-stats"><span id="result-correct-label">Jawapan betul</span><strong id="correct-count">0/5</strong></div>
         <div class="result-actions">
-          <button class="button button-primary" id="replay">Main Semula ↻</button>
-          <button class="button button-secondary" id="result-home">Menu Utama</button>
+          <button class="button button-primary" id="replay" type="button">Main Semula ↻</button>
+          <button class="button button-secondary" id="result-home" type="button">Menu Utama</button>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <span>GRAFIK DIGITAL QUEST</span>
-    <span>Permainan pembelajaran · Topik 1.2</span>
-  </footer>
+  <footer class="site-footer"><span>GRAFIK DIGITAL QUEST</span><span id="footer-description">Permainan pembelajaran · Topik 1.2</span></footer>
 </body>
 </html>

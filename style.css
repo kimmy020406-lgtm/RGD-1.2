@@ -120,3 +120,20 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
 .form-error{color:#ff8585;font-size:12px;min-height:0;margin:0}
 .player-greeting,.result-player{font-size:12px;color:var(--muted)}
 .player-greeting strong,.result-player strong{color:var(--accent)}
+
+/* Header language control and bilingual additions */
+.header-actions{display:flex;align-items:center;gap:10px}
+.language-toggle{min-width:46px;padding:9px 12px;border:1px solid var(--accent);border-radius:10px;background:#14231a;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.8px;transition:background .2s,color .2s,transform .2s}
+.language-toggle:hover{background:var(--accent);color:#0b1710;transform:translateY(-2px)}
+.player-greeting{margin:8px 0 0}
+#begin-game{width:100%;text-align:center;justify-content:center}
+#result-player{margin:12px 0 0}
+@media(max-width:600px){
+  .site-header{padding-left:5%;padding-right:5%;gap:10px}
+  .brand{font-size:10px;gap:7px;letter-spacing:.5px}
+  .brand-mark{width:34px;height:34px;flex:0 0 34px}
+  .header-actions{gap:6px}
+  .header-pill{font-size:8px;padding:7px 8px;letter-spacing:.4px}
+  .status-dot{margin-right:3px}
+  .language-toggle{min-width:40px;padding:8px 9px}
+}
