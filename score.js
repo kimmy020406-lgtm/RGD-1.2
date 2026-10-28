@@ -1,62 +1,55 @@
 'use strict';
 
-const { getDatabase } = require('../lib/mongodb');
+const { getDb } = require('../lib/mongodb');
 
-module.exports = async function scoreHandler(req, res) {
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
+module.exports = async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
 
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
-    return res.status(405).json({ ok: false, error: 'Method not allowed.' });
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  let body = req.body;
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body); } catch { body = null; }
+  const body = req.body && typeof req.body === 'object' ? req.body : {};
+  const playerName = typeof body.playerName === 'string' ? body.playerName.trim().replace(/\s+/g, ' ').slice(0, 30) : '';
+  const score = Number(body.score);
+  const correctAnswers = Number(body.correctAnswers);
+  const totalQuestions = Number(body.totalQuestions);
+  const mission = Number(body.mission);
+
+  if (!playerName) {
+    return res.status(400).json({ ok: false, error: 'A player name is required.' });
   }
-
-  if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return res.status(400).json({ ok: false, error: 'A valid JSON request body is required.' });
+  if (!Number.isInteger(score) || score < 0 || score > 50 || score % 10 !== 0) {
+    return res.status(400).json({ ok: false, error: 'Score must be a multiple of 10 between 0 and 50.' });
   }
-
-  const playerName = typeof body.playerName === 'string'
-    ? body.playerName.replace(/[\u0000-\u001f\u007f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 30)
-    : '';
-  const { score, correctAnswers, totalQuestions, missionId, language } = body;
-
-  // Each mission has 5 questions, and each correct answer is worth 10 points.
-  const valid = playerName.length > 0
-    && Number.isInteger(score) && score >= 0 && score <= 50
-    && Number.isInteger(correctAnswers) && correctAnswers >= 0 && correctAnswers <= 5
-    && totalQuestions === 5
-    && score === correctAnswers * 10
-    && Number.isInteger(missionId) && missionId >= 0 && missionId <= 2
-    && (language === 'ms' || language === 'en');
-
-  if (!valid) {
-    return res.status(400).json({ ok: false, error: 'Invalid score data.' });
+  if (!Number.isInteger(correctAnswers) || correctAnswers < 0 || correctAnswers > 5) {
+    return res.status(400).json({ ok: false, error: 'correctAnswers must be between 0 and 5.' });
+  }
+  if (totalQuestions !== 5 || score !== correctAnswers * 10) {
+    return res.status(400).json({ ok: false, error: 'Score data is inconsistent.' });
+  }
+  if (!Number.isInteger(mission) || mission < 0 || mission > 2) {
+    return res.status(400).json({ ok: false, error: 'Mission must be 0, 1, or 2.' });
   }
 
   try {
-    const db = await getDatabase();
+    const db = await getDb();
     const entry = {
       playerName,
       score,
       correctAnswers,
       totalQuestions,
-      missionId,
-      language,
+      mission,
       createdAt: new Date()
     };
-
-    const result = await db.collection('scores').insertOne(entry);
-    return res.status(201).json({
-      ok: true,
-      scoreId: result.insertedId.toString(),
-      message: 'Score saved.'
-    });
+    const inserted = await db.collection('scores').insertOne(entry);
+    return res.status(201).json({ ok: true, id: String(inserted.insertedId) });
   } catch (error) {
-    console.error('POST /api/score failed:', error.message);
-    return res.status(500).json({ ok: false, error: 'Unable to save score.' });
+    console.error('Score API failed:', error && error.message ? error.message : error);
+    return res.status(500).json({
+      ok: false,
+      error: 'Could not save score. Check Vercel logs and MongoDB settings.'
+    });
   }
 };

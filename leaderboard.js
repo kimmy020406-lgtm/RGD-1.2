@@ -1,18 +1,18 @@
 'use strict';
 
-const { getDatabase } = require('../lib/mongodb');
+const { getDb } = require('../lib/mongodb');
 
-module.exports = async function leaderboardHandler(req, res) {
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
+module.exports = async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
 
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    return res.status(405).json({ ok: false, error: 'Method not allowed.' });
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
   try {
-    const db = await getDatabase();
-    const rows = await db.collection('scores')
+    const db = await getDb();
+    const scores = await db.collection('scores')
       .find({}, {
         projection: {
           _id: 0,
@@ -20,7 +20,7 @@ module.exports = async function leaderboardHandler(req, res) {
           score: 1,
           correctAnswers: 1,
           totalQuestions: 1,
-          missionId: 1,
+          mission: 1,
           createdAt: 1
         }
       })
@@ -28,9 +28,21 @@ module.exports = async function leaderboardHandler(req, res) {
       .limit(10)
       .toArray();
 
-    return res.status(200).json({ ok: true, leaderboard: rows });
+    const leaderboard = scores.map((item) => ({
+      playerName: item.playerName,
+      score: item.score,
+      correctAnswers: item.correctAnswers,
+      totalQuestions: item.totalQuestions,
+      mission: item.mission,
+      createdAt: item.createdAt instanceof Date ? item.createdAt.toISOString() : null
+    }));
+
+    return res.status(200).json({ ok: true, leaderboard });
   } catch (error) {
-    console.error('GET /api/leaderboard failed:', error.message);
-    return res.status(500).json({ ok: false, error: 'Unable to load leaderboard.' });
+    console.error('Leaderboard API failed:', error && error.message ? error.message : error);
+    return res.status(500).json({
+      ok: false,
+      error: 'Could not load leaderboard. Check Vercel logs and MongoDB settings.'
+    });
   }
 };

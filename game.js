@@ -71,16 +71,11 @@ const missions = [
 
 const ui = {
   ms: {
-    headerMode: 'MOD PEMBELAJARAN', heroEyebrow: 'TOPIK 1.2 · ASAS GRAFIK DIGITAL', heroTitle: 'Teroka dunia<br><span>Grafik Digital.</span>', heroDescription: 'Selesaikan misi, kenal pasti sumber bahan grafik dan kuasai perkakasan yang digunakan dalam penghasilan grafik digital.', start: 'Mula Bermain <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Misi', metaQuestions: '✦ 15 Soalan', metaFree: '✦ Main Percuma', chooseEyebrow: 'PILIH PENGEMBARAAN', chooseTitle: 'Pilih misi anda', chooseDescription: 'Kumpul mata dan uji pengetahuan anda.', missionButton: 'Mula Misi <span>→</span>', learningEyebrow: 'HASIL PEMBELAJARAN', learningTitle: 'Apa yang akan dipelajari?', outcome1: '<strong>1.2.1</strong> Menyenaraikan sumber pemerolehan bahan grafik.', outcome2: '<strong>1.2.2</strong> Menjelaskan fungsi dan spesifikasi perkakasan grafik digital.', outcome3: 'Mengenal pasti komputer, kamera digital, pengimbas, pencetak dan tablet grafik.', nameBack: '← Kembali ke menu utama', nameEyebrow: 'SEDIA UNTUK BERMAIN?', nameTitle: 'Masukkan nama<br><span>pemain.</span>', nameDescription: 'Nama anda akan dipaparkan pada skrin permainan dan keputusan.', nameLabel: 'NAMA PEMAIN', namePlaceholder: 'Contoh: Aina', nameError: 'Sila masukkan nama sebelum bermain.', beginGame: 'Teruskan ke permainan →', backHome: '← Kembali ke menu utama', statusMission: 'MISI', statusScore: 'SKOR', statusLives: 'NYAWA', questionHint: 'Pilih satu jawapan yang paling tepat.', next: 'Seterusnya →', seeResults: 'Lihat Keputusan →', resultEyebrow: 'MISI SELESAI', resultTitle: 'Tahniah!', resultMessage: 'Anda telah menamatkan cabaran.', resultScoreLabel: 'JUMLAH MATA', resultCorrectLabel: 'Jawapan betul', replay: 'Main Semula ↻', resultHome: 'Menu Utama', footer: 'Permainan pembelajaran · Topik 1.2', questionCounter: (n,total)=>`SOALAN ${n} / ${total}`, player: n=>`Pemain: <strong>${n}</strong>`, resultPlayer:n=>`Keputusan untuk <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Betul! ${explanation}`, wrongFeedback: explanation=>`✗ Belum tepat. ${explanation}`, correctHint: '+10 mata', wrongHint: 'Semak penerangan dan teruskan!', perfectTitle: 'Hebat sekali!', perfectMessage: 'Sempurna! Semua jawapan betul.', goodTitle: 'Misi berjaya!', goodMessage: 'Bagus! Teruskan latihan untuk kuasai semua konsep.', retryTitle: 'Terus mencuba!', retryMessage: 'Ulang kaji penerangan jawapan dan cuba sekali lagi.', missionNumber: n=>`MISI 0${n+1}`, questionLabel: 'Soalan akan dipaparkan di sini.'
+    headerMode: 'MOD PEMBELAJARAN', heroEyebrow: 'TOPIK 1.2 · ASAS GRAFIK DIGITAL', heroTitle: 'Teroka dunia<br><span>Grafik Digital.</span>', heroDescription: 'Selesaikan misi, kenal pasti sumber bahan grafik dan kuasai perkakasan yang digunakan dalam penghasilan grafik digital.', start: 'Mula Bermain <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Misi', metaQuestions: '✦ 15 Soalan', metaFree: '✦ Main Percuma', chooseEyebrow: 'PILIH PENGEMBARAAN', chooseTitle: 'Pilih misi anda', chooseDescription: 'Kumpul mata dan uji pengetahuan anda.', missionButton: 'Mula Misi <span>→</span>', learningEyebrow: 'HASIL PEMBELAJARAN', learningTitle: 'Apa yang akan dipelajari?', outcome1: '<strong>1.2.1</strong> Menyenaraikan sumber pemerolehan bahan grafik.', outcome2: '<strong>1.2.2</strong> Menjelaskan fungsi dan spesifikasi perkakasan grafik digital.', outcome3: 'Mengenal pasti komputer, kamera digital, pengimbas, pencetak dan tablet grafik.', nameBack: '← Kembali ke menu utama', nameEyebrow: 'SEDIA UNTUK BERMAIN?', nameTitle: 'Masukkan nama<br><span>pemain.</span>', nameDescription: 'Nama anda akan dipaparkan pada skrin permainan dan keputusan.', nameLabel: 'NAMA PEMAIN', namePlaceholder: 'Contoh: Aina', nameError: 'Sila masukkan nama sebelum bermain.', beginGame: 'Teruskan ke permainan →', backHome: '← Kembali ke menu utama', statusMission: 'MISI', statusScore: 'SKOR', statusLives: 'NYAWA', questionHint: 'Pilih satu jawapan yang paling tepat.', next: 'Seterusnya →', seeResults: 'Lihat Keputusan →', resultEyebrow: 'MISI SELESAI', resultTitle: 'Tahniah!', resultMessage: 'Anda telah menamatkan cabaran.', resultScoreLabel: 'JUMLAH MATA', resultCorrectLabel: 'Jawapan betul', replay: 'Main Semula ↻', resultHome: 'Menu Utama', footer: 'Permainan pembelajaran · Topik 1.2', leaderboardEyebrow: 'PAPAN KEDUDUKAN', leaderboardTitle: 'Top 10 pemain', leaderboardDescription: 'Skor terbaik daripada permainan yang telah selesai.', leaderboardRefresh: '↻ Muat semula', leaderboardLoading: 'Memuatkan leaderboard…', leaderboardEmpty: 'Belum ada skor.', leaderboardLoadFailed: 'Tidak dapat memuatkan leaderboard. Cuba lagi.', leaderboardSaving: 'Menyimpan skor ke leaderboard…', leaderboardSaved: 'Skor berjaya disimpan!', leaderboardSaveFailed: 'Skor tidak dapat disimpan. Sila semak tetapan sambungan.', leaderboardRank: '#', leaderboardPlayer: 'Pemain', leaderboardScore: 'Skor', leaderboardCorrect: 'Betul', leaderboardMission: 'Misi', questionCounter: (n,total)=>`SOALAN ${n} / ${total}`, player: n=>`Pemain: <strong>${n}</strong>`, resultPlayer:n=>`Keputusan untuk <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Betul! ${explanation}`, wrongFeedback: explanation=>`✗ Belum tepat. ${explanation}`, correctHint: '+10 mata', wrongHint: 'Semak penerangan dan teruskan!', perfectTitle: 'Hebat sekali!', perfectMessage: 'Sempurna! Semua jawapan betul.', goodTitle: 'Misi berjaya!', goodMessage: 'Bagus! Teruskan latihan untuk kuasai semua konsep.', retryTitle: 'Terus mencuba!', retryMessage: 'Ulang kaji penerangan jawapan dan cuba sekali lagi.', missionNumber: n=>`MISI 0${n+1}`, questionLabel: 'Soalan akan dipaparkan di sini.'
   },
   en: {
-    headerMode: 'LEARNING MODE', heroEyebrow: 'TOPIC 1.2 · DIGITAL GRAPHICS BASICS', heroTitle: 'Explore the world of<br><span>Digital Graphics.</span>', heroDescription: 'Complete missions, identify sources of graphic materials, and learn about the hardware used to create digital graphics.', start: 'Start Playing <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Missions', metaQuestions: '✦ 15 Questions', metaFree: '✦ Free to Play', chooseEyebrow: 'CHOOSE YOUR ADVENTURE', chooseTitle: 'Choose a mission', chooseDescription: 'Earn points and test your knowledge.', missionButton: 'Start Mission <span>→</span>', learningEyebrow: 'LEARNING OUTCOMES', learningTitle: 'What will you learn?', outcome1: '<strong>1.2.1</strong> List sources for obtaining graphic materials.', outcome2: '<strong>1.2.2</strong> Explain the functions and specifications of digital graphics hardware.', outcome3: 'Identify computers, digital cameras, scanners, printers, and graphics tablets.', nameBack: '← Back to main menu', nameEyebrow: 'READY TO PLAY?', nameTitle: 'Enter your<br><span>player name.</span>', nameDescription: 'Your name will appear on the game and results screens.', nameLabel: 'PLAYER NAME', namePlaceholder: 'e.g. Alex', nameError: 'Please enter your name before playing.', beginGame: 'Continue to game →', backHome: '← Back to main menu', statusMission: 'MISSION', statusScore: 'SCORE', statusLives: 'LIVES', questionHint: 'Choose the most accurate answer.', next: 'Next →', seeResults: 'View Results →', resultEyebrow: 'MISSION COMPLETE', resultTitle: 'Congratulations!', resultMessage: 'You have completed the challenge.', resultScoreLabel: 'TOTAL SCORE', resultCorrectLabel: 'Correct answers', replay: 'Play Again ↻', resultHome: 'Main Menu', footer: 'Learning game · Topic 1.2', questionCounter: (n,total)=>`QUESTION ${n} / ${total}`, player: n=>`Player: <strong>${n}</strong>`, resultPlayer:n=>`Results for <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Correct! ${explanation}`, wrongFeedback: explanation=>`✗ Not quite. ${explanation}`, correctHint: '+10 points', wrongHint: 'Review the explanation and continue!', perfectTitle: 'Outstanding!', perfectMessage: 'Perfect! Every answer is correct.', goodTitle: 'Mission complete!', goodMessage: 'Well done! Keep practising to master every concept.', retryTitle: 'Keep trying!', retryMessage: 'Review the explanations and give it another try.', missionNumber: n=>`MISSION 0${n+1}`, questionLabel: 'Your question will appear here.'
+    headerMode: 'LEARNING MODE', heroEyebrow: 'TOPIC 1.2 · DIGITAL GRAPHICS BASICS', heroTitle: 'Explore the world of<br><span>Digital Graphics.</span>', heroDescription: 'Complete missions, identify sources of graphic materials, and learn about the hardware used to create digital graphics.', start: 'Start Playing <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Missions', metaQuestions: '✦ 15 Questions', metaFree: '✦ Free to Play', chooseEyebrow: 'CHOOSE YOUR ADVENTURE', chooseTitle: 'Choose a mission', chooseDescription: 'Earn points and test your knowledge.', missionButton: 'Start Mission <span>→</span>', learningEyebrow: 'LEARNING OUTCOMES', learningTitle: 'What will you learn?', outcome1: '<strong>1.2.1</strong> List sources for obtaining graphic materials.', outcome2: '<strong>1.2.2</strong> Explain the functions and specifications of digital graphics hardware.', outcome3: 'Identify computers, digital cameras, scanners, printers, and graphics tablets.', nameBack: '← Back to main menu', nameEyebrow: 'READY TO PLAY?', nameTitle: 'Enter your<br><span>player name.</span>', nameDescription: 'Your name will appear on the game and results screens.', nameLabel: 'PLAYER NAME', namePlaceholder: 'e.g. Alex', nameError: 'Please enter your name before playing.', beginGame: 'Continue to game →', backHome: '← Back to main menu', statusMission: 'MISSION', statusScore: 'SCORE', statusLives: 'LIVES', questionHint: 'Choose the most accurate answer.', next: 'Next →', seeResults: 'View Results →', resultEyebrow: 'MISSION COMPLETE', resultTitle: 'Congratulations!', resultMessage: 'You have completed the challenge.', resultScoreLabel: 'TOTAL SCORE', resultCorrectLabel: 'Correct answers', replay: 'Play Again ↻', resultHome: 'Main Menu', footer: 'Learning game · Topic 1.2', leaderboardEyebrow: 'LEADERBOARD', leaderboardTitle: 'Top 10 players', leaderboardDescription: 'Highest scores from completed games.', leaderboardRefresh: '↻ Refresh', leaderboardLoading: 'Loading leaderboard…', leaderboardEmpty: 'No scores yet.', leaderboardLoadFailed: 'Could not load leaderboard. Please try again.', leaderboardSaving: 'Saving score to leaderboard…', leaderboardSaved: 'Score saved successfully!', leaderboardSaveFailed: 'Could not save score. Please check the connection settings.', leaderboardRank: '#', leaderboardPlayer: 'Player', leaderboardScore: 'Score', leaderboardCorrect: 'Correct', leaderboardMission: 'Mission', questionCounter: (n,total)=>`QUESTION ${n} / ${total}`, player: n=>`Player: <strong>${n}</strong>`, resultPlayer:n=>`Results for <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Correct! ${explanation}`, wrongFeedback: explanation=>`✗ Not quite. ${explanation}`, correctHint: '+10 points', wrongHint: 'Review the explanation and continue!', perfectTitle: 'Outstanding!', perfectMessage: 'Perfect! Every answer is correct.', goodTitle: 'Mission complete!', goodMessage: 'Well done! Keep practising to master every concept.', retryTitle: 'Keep trying!', retryMessage: 'Review the explanations and give it another try.', missionNumber: n=>`MISSION 0${n+1}`, questionLabel: 'Your question will appear here.'
   }
-};
-
-const leaderboardWords = {
-  ms: { eyebrow: 'PAPAN KEDUDUKAN', title: 'Top 10 pemain', description: 'Skor tertinggi daripada permainan yang telah selesai.', refresh: '↻ Muat semula', loading: 'Memuatkan leaderboard...', empty: 'Belum ada skor. Jadilah pemain pertama!', loadError: 'Tak dapat memuatkan leaderboard. Semak konfigurasi Vercel dan MongoDB.', saving: 'Menyimpan skor ke MongoDB...', saved: 'Skor berjaya dihantar ke leaderboard!', saveError: 'Skor tidak dapat disimpan. Semak konfigurasi Vercel dan MongoDB.', rank: 'KEDUDUKAN', player: 'PEMAIN', score: 'SKOR', correct: 'BETUL', mission: 'MISI', correctCount: (n,t)=>`${n}/${t}`, missionUnavailable: 'Misi' },
-  en: { eyebrow: 'LEADERBOARD', title: 'Top 10 Players', description: 'Highest scores from completed games.', refresh: '↻ Refresh', loading: 'Loading leaderboard...', empty: 'No scores yet. Be the first player!', loadError: 'Could not load the leaderboard. Check your Vercel and MongoDB setup.', saving: 'Saving score to MongoDB...', saved: 'Score submitted to the leaderboard!', saveError: 'Score could not be saved. Check your Vercel and MongoDB setup.', rank: 'RANK', player: 'PLAYER', score: 'SCORE', correct: 'CORRECT', mission: 'MISSION', correctCount: (n,t)=>`${n}/${t}`, missionUnavailable: 'Mission' }
 };
 
 const screens = {
@@ -100,6 +95,10 @@ let hasAnswered = false;
 let playerName = '';
 let currentOptions = [];
 let selectedOptionIndex = -1;
+let leaderboardCache = [];
+let leaderboardLoadError = false;
+let scoreSaveState = '';
+let lastScoreSubmissionKey = ''; 
 
 function textFor(value) {
   return typeof value === 'string' ? value : value[language];
@@ -144,7 +143,10 @@ function applyLanguage() {
     'back-home': 'backHome', 'status-mission-label': 'statusMission', 'status-score-label': 'statusScore',
     'status-lives-label': 'statusLives', 'result-eyebrow': 'resultEyebrow', 'result-score-label': 'resultScoreLabel',
     'result-correct-label': 'resultCorrectLabel', 'replay': 'replay', 'result-home': 'resultHome',
-    'footer-description': 'footer'
+    'footer-description': 'footer', 'leaderboard-eyebrow': 'leaderboardEyebrow', 'leaderboard-title': 'leaderboardTitle',
+    'leaderboard-description': 'leaderboardDescription', 'refresh-leaderboard': 'leaderboardRefresh',
+    'lb-head-rank': 'leaderboardRank', 'lb-head-player': 'leaderboardPlayer', 'lb-head-score': 'leaderboardScore',
+    'lb-head-correct': 'leaderboardCorrect', 'lb-head-mission': 'leaderboardMission'
   };
   Object.entries(mappings).forEach(([id, key]) => {
     const el = document.getElementById(id);
@@ -175,104 +177,13 @@ function applyLanguage() {
   setText('name-error', '');
   if (screens.game.classList.contains('active')) renderQuestion(true);
   if (screens.result.classList.contains('active')) updateResultText();
-  applyLeaderboardLanguage();
-}
-function applyLeaderboardLanguage() {
-  const words = leaderboardWords[language];
-  const mapping = {
-    'leaderboard-eyebrow': words.eyebrow, 'leaderboard-title': words.title,
-    'leaderboard-description': words.description, 'refresh-leaderboard': words.refresh,
-    'lb-head-rank': words.rank, 'lb-head-player': words.player,
-    'lb-head-score': words.score, 'lb-head-correct': words.correct, 'lb-head-mission': words.mission
-  };
-  Object.entries(mapping).forEach(([id, value]) => setText(id, value));
-  const status = document.getElementById('leaderboard-status');
-  if (status && status.dataset.state) {
-    const stateMessages = { loading: words.loading, empty: words.empty, error: words.loadError, ready: '' };
-    if (Object.hasOwn(stateMessages, status.dataset.state)) status.textContent = stateMessages[status.dataset.state];
+  if (Array.isArray(leaderboardCache)) {
+    renderLeaderboard();
+    if (leaderboardLoadError) setText('leaderboard-status', ui[language].leaderboardLoadFailed);
+    else if (!leaderboardCache.length) setText('leaderboard-status', ui[language].leaderboardEmpty);
+    else setText('leaderboard-status', '');
   }
-}
-function setScoreSaveStatus(message, type = '') {
-  const status = document.getElementById('score-save-status');
-  if (!status) return;
-  status.textContent = message;
-  status.className = `score-save-status${type ? ` ${type}` : ''}`;
-}
-async function loadLeaderboard() {
-  const status = document.getElementById('leaderboard-status');
-  const body = document.getElementById('leaderboard-body');
-  if (!status || !body) return;
-  const words = leaderboardWords[language];
-  status.dataset.state = 'loading';
-  status.textContent = words.loading;
-  body.replaceChildren();
-  try {
-    const response = await fetch('/api/leaderboard', { headers: { Accept: 'application/json' } });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok || !payload.ok || !Array.isArray(payload.leaderboard)) throw new Error('Leaderboard API error');
-    if (payload.leaderboard.length === 0) {
-      status.dataset.state = 'empty';
-      status.textContent = leaderboardWords[language].empty;
-      addLeaderboardMessageRow(body, leaderboardWords[language].empty);
-      return;
-    }
-    status.dataset.state = 'ready';
-    status.textContent = '';
-    payload.leaderboard.forEach((entry, index) => {
-      const row = document.createElement('tr');
-      const rank = document.createElement('td');
-      rank.className = 'leaderboard-rank';
-      rank.textContent = index === 0 ? '🥇 1' : index === 1 ? '🥈 2' : index === 2 ? '🥉 3' : String(index + 1);
-      const player = document.createElement('td');
-      player.className = 'leaderboard-player';
-      player.textContent = String(entry.playerName || 'Player').slice(0, 30);
-      const scoreCell = document.createElement('td');
-      scoreCell.className = 'leaderboard-score';
-      scoreCell.textContent = String(Number(entry.score) || 0);
-      const correct = document.createElement('td');
-      correct.textContent = words.correctCount(Number(entry.correctAnswers) || 0, Number(entry.totalQuestions) || 5);
-      const mission = document.createElement('td');
-      const missionId = Number(entry.missionId);
-      mission.textContent = Number.isInteger(missionId) && missions[missionId] ? textFor(missions[missionId].name) : words.missionUnavailable;
-      row.append(rank, player, scoreCell, correct, mission);
-      body.appendChild(row);
-    });
-  } catch (error) {
-    console.error('Leaderboard load failed:', error);
-    status.dataset.state = 'error';
-    status.textContent = leaderboardWords[language].loadError;
-    addLeaderboardMessageRow(body, leaderboardWords[language].loadError);
-  }
-}
-function addLeaderboardMessageRow(body, message) {
-  const row = document.createElement('tr');
-  const cell = document.createElement('td');
-  cell.colSpan = 5;
-  cell.className = 'leaderboard-empty';
-  cell.textContent = message;
-  row.appendChild(cell);
-  body.appendChild(row);
-}
-async function saveScoreToLeaderboard() {
-  const words = leaderboardWords[language];
-  setScoreSaveStatus(words.saving);
-  try {
-    const response = await fetch('/api/score', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        playerName, score, correctAnswers, totalQuestions: missions[currentMission].questions.length,
-        missionId: currentMission, language
-      })
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok || !payload.ok) throw new Error(payload.error || 'Score save failed');
-    setScoreSaveStatus(leaderboardWords[language].saved, 'success');
-    await loadLeaderboard();
-  } catch (error) {
-    console.error('Score save failed:', error);
-    setScoreSaveStatus(leaderboardWords[language].saveError, 'error');
-  }
+  if (scoreSaveState) setText('score-save-status', ui[language][scoreSaveState]);
 }
 function startGame(index) {
   if (!Number.isInteger(index) || index < 0 || index >= missions.length) index = 0;
@@ -417,16 +328,115 @@ function updateResultText() {
   setText('result-icon', icon);
   setHTML('result-player', ui[language].resultPlayer(escapeHTML(playerName)));
 }
+function renderLeaderboard() {
+  const tbody = document.getElementById('leaderboard-body');
+  if (!tbody) return;
+  tbody.replaceChildren();
+
+  if (leaderboardLoadError) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.className = 'leaderboard-empty';
+    cell.textContent = ui[language].leaderboardLoadFailed;
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    return;
+  }
+
+  if (!leaderboardCache.length) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 5;
+    cell.className = 'leaderboard-empty';
+    cell.textContent = ui[language].leaderboardEmpty;
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    return;
+  }
+
+  leaderboardCache.forEach((entry, index) => {
+    const row = document.createElement('tr');
+    const values = [
+      String(index + 1),
+      String(entry.playerName || '—'),
+      String(Number(entry.score) || 0),
+      `${Number(entry.correctAnswers) || 0}/${Number(entry.totalQuestions) || 5}`,
+      textFor(missions[Number(entry.mission)]?.name || { ms: 'Misi', en: 'Mission' })
+    ];
+    values.forEach((value, cellIndex) => {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      if (cellIndex === 0) cell.className = 'leaderboard-rank';
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
+}
+
+async function loadLeaderboard() {
+  const status = document.getElementById('leaderboard-status');
+  if (status) setText('leaderboard-status', ui[language].leaderboardLoading);
+  try {
+    const response = await fetch('/api/leaderboard', { method: 'GET', cache: 'no-store', headers: { Accept: 'application/json' } });
+    const data = await response.json();
+    if (!response.ok || !data || data.ok !== true || !Array.isArray(data.leaderboard)) {
+      throw new Error('Leaderboard endpoint returned an error');
+    }
+    leaderboardCache = data.leaderboard;
+    leaderboardLoadError = false;
+    renderLeaderboard();
+    if (status) setText('leaderboard-status', leaderboardCache.length ? '' : ui[language].leaderboardEmpty);
+  } catch (error) {
+    console.error('Unable to load leaderboard:', error);
+    leaderboardCache = [];
+    leaderboardLoadError = true;
+    renderLeaderboard();
+    if (status) setText('leaderboard-status', ui[language].leaderboardLoadFailed);
+  }
+}
+
+async function saveCompletedScore() {
+  scoreSaveState = 'leaderboardSaving';
+  setText('score-save-status', ui[language][scoreSaveState]);
+  const submissionKey = `${playerName}|${currentMission}|${score}|${correctAnswers}|${Date.now()}`;
+  if (lastScoreSubmissionKey === submissionKey) return;
+  lastScoreSubmissionKey = submissionKey;
+  try {
+    const response = await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        playerName,
+        score,
+        correctAnswers,
+        totalQuestions: missions[currentMission].questions.length,
+        mission: currentMission
+      })
+    });
+    const data = await response.json();
+    if (!response.ok || !data || data.ok !== true) throw new Error(data && data.error ? data.error : 'Score save failed');
+    scoreSaveState = 'leaderboardSaved';
+    setText('score-save-status', ui[language][scoreSaveState]);
+    await loadLeaderboard();
+  } catch (error) {
+    console.error('Unable to save score:', error);
+    scoreSaveState = 'leaderboardSaveFailed';
+    setText('score-save-status', ui[language][scoreSaveState]);
+  }
+}
+
 function finishGame() {
   const total = missions[currentMission].questions.length;
   document.getElementById('progress-bar').style.width = '100%';
   setText('progress-percent', '100%');
   setText('final-score', String(score));
   setText('correct-count', `${correctAnswers}/${total}`);
+  scoreSaveState = 'leaderboardSaving';
+  setText('score-save-status', ui[language][scoreSaveState]);
   updateResultText();
-  setScoreSaveStatus(leaderboardWords[language].saving);
   showScreen('result');
-  saveScoreToLeaderboard();
+  saveCompletedScore();
 }
 
 document.getElementById('language-toggle').addEventListener('click', () => {

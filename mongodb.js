@@ -2,30 +2,26 @@
 
 const { MongoClient } = require('mongodb');
 
-/**
- * Reuse one MongoClient connection pool across Vercel Function invocations.
- * Set MONGODB_URI in Vercel Project Settings > Environment Variables.
- */
-async function getDatabase() {
+let cachedClientPromise = global.__rgdMongoClientPromise;
+
+async function getDb() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    throw new Error('MONGODB_URI is not configured. Add it in Vercel Environment Variables.');
+    throw new Error('Missing MONGODB_URI environment variable');
   }
 
-  if (!globalThis.__rgdMongoClientPromise) {
+  if (!cachedClientPromise) {
     const client = new MongoClient(uri, {
-      serverSelectionTimeoutMS: 8000,
-      appName: 'GrafikDigitalQuest'
+      serverSelectionTimeoutMS: 10000,
+      maxPoolSize: 5
     });
-    globalThis.__rgdMongoClientPromise = client.connect().catch((error) => {
-      globalThis.__rgdMongoClientPromise = null;
-      throw error;
-    });
+    cachedClientPromise = client.connect();
+    global.__rgdMongoClientPromise = cachedClientPromise;
   }
 
-  const client = await globalThis.__rgdMongoClientPromise;
+  const client = await cachedClientPromise;
   const dbName = process.env.MONGODB_DB || 'grafik_digital_quest';
   return client.db(dbName);
 }
 
-module.exports = { getDatabase };
+module.exports = { getDb };

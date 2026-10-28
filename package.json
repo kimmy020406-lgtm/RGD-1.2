@@ -1,12 +1,12 @@
 {
-  "name": "rgd-grafik-digital-quest",
+  "name": "grafik-digital-quest-leaderboard",
   "version": "1.0.0",
   "private": true,
-  "description": "Grafik Digital Quest with MongoDB Atlas leaderboard and Vercel API routes",
+  "description": "Grafik Digital Quest with a MongoDB Atlas leaderboard for Vercel",
   "engines": {
-    "node": ">=20"
+    "node": ">=18.x"
   },
   "dependencies": {
-    "mongodb": "^6.17.0"
+    "mongodb": "^6.13.0"
   }
 }
