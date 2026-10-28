@@ -1,44 +1,53 @@
+import { getDb } from '../lib/mongodb.js';
 
-const { getDb } = require('../lib/mongodb');
+const headers = {
+  'Content-Type': 'application/json; charset=utf-8',
+  'Cache-Control': 'no-store, max-age=0',
+  'X-Content-Type-Options': 'nosniff'
+};
 
-module.exports = async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store');
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), { status, headers });
+}
 
-  if (req.method !== 'GET') {
-    return res.status(405).json({
-      ok: false,
-      error: 'Method not allowed'
-    });
+export default async function handler(request) {
+  if (request.method !== 'GET') {
+    return json({ ok: false, error: 'Method not allowed' }, 405);
   }
 
   try {
     const db = await getDb();
-
-    const leaderboard = await db.collection('scores')
-      .find({})
+    const scores = await db.collection('scores')
+      .find({}, {
+        projection: {
+          _id: 0,
+          playerName: 1,
+          score: 1,
+          correctAnswers: 1,
+          totalQuestions: 1,
+          mission: 1,
+          createdAt: 1
+        }
+      })
       .sort({ score: -1, correctAnswers: -1, createdAt: 1 })
       .limit(10)
-      .project({
-        _id: 0,
-        playerName: 1,
-        score: 1,
-        correctAnswers: 1,
-        totalQuestions: 1,
-        mission: 1,
-        createdAt: 1
-      })
       .toArray();
 
-    return res.status(200).json({
-      ok: true,
-      leaderboard
-    });
-  } catch (error) {
-    console.error('Leaderboard error:', error.message);
+    const leaderboard = scores.map((entry) => ({
+      playerName: typeof entry.playerName === 'string' ? entry.playerName : 'Player',
+      score: Number(entry.score) || 0,
+      correctAnswers: Number(entry.correctAnswers) || 0,
+      totalQuestions: Number(entry.totalQuestions) || 5,
+      mission: Number.isInteger(Number(entry.mission)) ? Number(entry.mission) : 0,
+      createdAt: entry.createdAt instanceof Date ? entry.createdAt.toISOString() : null
+    }));
 
-    return res.status(500).json({
+    return json({ ok: true, leaderboard });
+  } catch (error) {
+    console.error('Leaderboard API failed:', error?.message || error);
+    return json({
       ok: false,
-      error: 'Database connection failed'
-    });
+      error: 'Could not load leaderboard. Check Vercel function logs and MongoDB settings.'
+    }, 500);
   }
-};
+}

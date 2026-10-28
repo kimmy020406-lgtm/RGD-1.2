@@ -1,12 +1,13 @@
 {
-  "name": "grafik-digital-quest-leaderboard",
-  "version": "1.0.0",
+  "name": "grafik-digital-quest",
+  "version": "2.0.0",
   "private": true,
-  "description": "Grafik Digital Quest with a MongoDB Atlas leaderboard for Vercel",
+  "type": "module",
+  "description": "Grafik Digital Quest bilingual learning game with a MongoDB Atlas leaderboard for Vercel",
   "engines": {
-    "node": ">=18.x"
+    "node": ">=20.19.0"
   },
   "dependencies": {
-    "mongodb": "^6.13.0"
+    "mongodb": "^7.7.0"
   }
 }

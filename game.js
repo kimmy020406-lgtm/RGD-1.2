@@ -338,7 +338,8 @@ function renderLeaderboard() {
     const cell = document.createElement('td');
     cell.colSpan = 5;
     cell.className = 'leaderboard-empty';
-    cell.textContent = ui[language].leaderboardLoadFailed;
+    // The error explanation is shown once in the status line above the table.
+    cell.textContent = '—';
     row.appendChild(cell);
     tbody.appendChild(row);
     return;
@@ -386,7 +387,8 @@ async function loadLeaderboard() {
     leaderboardCache = data.leaderboard;
     leaderboardLoadError = false;
     renderLeaderboard();
-    if (status) setText('leaderboard-status', leaderboardCache.length ? '' : ui[language].leaderboardEmpty);
+    // The table itself displays the empty-state message, avoiding duplicate text.
+    if (status) setText('leaderboard-status', '');
   } catch (error) {
     console.error('Unable to load leaderboard:', error);
     leaderboardCache = [];
