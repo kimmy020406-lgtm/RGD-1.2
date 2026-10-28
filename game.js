@@ -78,6 +78,11 @@ const ui = {
   }
 };
 
+const leaderboardWords = {
+  ms: { eyebrow: 'PAPAN KEDUDUKAN', title: 'Top 10 pemain', description: 'Skor tertinggi daripada permainan yang telah selesai.', refresh: '↻ Muat semula', loading: 'Memuatkan leaderboard...', empty: 'Belum ada skor. Jadilah pemain pertama!', loadError: 'Tak dapat memuatkan leaderboard. Semak konfigurasi Vercel dan MongoDB.', saving: 'Menyimpan skor ke MongoDB...', saved: 'Skor berjaya dihantar ke leaderboard!', saveError: 'Skor tidak dapat disimpan. Semak konfigurasi Vercel dan MongoDB.', rank: 'KEDUDUKAN', player: 'PEMAIN', score: 'SKOR', correct: 'BETUL', mission: 'MISI', correctCount: (n,t)=>`${n}/${t}`, missionUnavailable: 'Misi' },
+  en: { eyebrow: 'LEADERBOARD', title: 'Top 10 Players', description: 'Highest scores from completed games.', refresh: '↻ Refresh', loading: 'Loading leaderboard...', empty: 'No scores yet. Be the first player!', loadError: 'Could not load the leaderboard. Check your Vercel and MongoDB setup.', saving: 'Saving score to MongoDB...', saved: 'Score submitted to the leaderboard!', saveError: 'Score could not be saved. Check your Vercel and MongoDB setup.', rank: 'RANK', player: 'PLAYER', score: 'SCORE', correct: 'CORRECT', mission: 'MISSION', correctCount: (n,t)=>`${n}/${t}`, missionUnavailable: 'Mission' }
+};
+
 const screens = {
   home: document.getElementById('home-screen'),
   name: document.getElementById('name-screen'),
@@ -170,6 +175,104 @@ function applyLanguage() {
   setText('name-error', '');
   if (screens.game.classList.contains('active')) renderQuestion(true);
   if (screens.result.classList.contains('active')) updateResultText();
+  applyLeaderboardLanguage();
+}
+function applyLeaderboardLanguage() {
+  const words = leaderboardWords[language];
+  const mapping = {
+    'leaderboard-eyebrow': words.eyebrow, 'leaderboard-title': words.title,
+    'leaderboard-description': words.description, 'refresh-leaderboard': words.refresh,
+    'lb-head-rank': words.rank, 'lb-head-player': words.player,
+    'lb-head-score': words.score, 'lb-head-correct': words.correct, 'lb-head-mission': words.mission
+  };
+  Object.entries(mapping).forEach(([id, value]) => setText(id, value));
+  const status = document.getElementById('leaderboard-status');
+  if (status && status.dataset.state) {
+    const stateMessages = { loading: words.loading, empty: words.empty, error: words.loadError, ready: '' };
+    if (Object.hasOwn(stateMessages, status.dataset.state)) status.textContent = stateMessages[status.dataset.state];
+  }
+}
+function setScoreSaveStatus(message, type = '') {
+  const status = document.getElementById('score-save-status');
+  if (!status) return;
+  status.textContent = message;
+  status.className = `score-save-status${type ? ` ${type}` : ''}`;
+}
+async function loadLeaderboard() {
+  const status = document.getElementById('leaderboard-status');
+  const body = document.getElementById('leaderboard-body');
+  if (!status || !body) return;
+  const words = leaderboardWords[language];
+  status.dataset.state = 'loading';
+  status.textContent = words.loading;
+  body.replaceChildren();
+  try {
+    const response = await fetch('/api/leaderboard', { headers: { Accept: 'application/json' } });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok || !Array.isArray(payload.leaderboard)) throw new Error('Leaderboard API error');
+    if (payload.leaderboard.length === 0) {
+      status.dataset.state = 'empty';
+      status.textContent = leaderboardWords[language].empty;
+      addLeaderboardMessageRow(body, leaderboardWords[language].empty);
+      return;
+    }
+    status.dataset.state = 'ready';
+    status.textContent = '';
+    payload.leaderboard.forEach((entry, index) => {
+      const row = document.createElement('tr');
+      const rank = document.createElement('td');
+      rank.className = 'leaderboard-rank';
+      rank.textContent = index === 0 ? '🥇 1' : index === 1 ? '🥈 2' : index === 2 ? '🥉 3' : String(index + 1);
+      const player = document.createElement('td');
+      player.className = 'leaderboard-player';
+      player.textContent = String(entry.playerName || 'Player').slice(0, 30);
+      const scoreCell = document.createElement('td');
+      scoreCell.className = 'leaderboard-score';
+      scoreCell.textContent = String(Number(entry.score) || 0);
+      const correct = document.createElement('td');
+      correct.textContent = words.correctCount(Number(entry.correctAnswers) || 0, Number(entry.totalQuestions) || 5);
+      const mission = document.createElement('td');
+      const missionId = Number(entry.missionId);
+      mission.textContent = Number.isInteger(missionId) && missions[missionId] ? textFor(missions[missionId].name) : words.missionUnavailable;
+      row.append(rank, player, scoreCell, correct, mission);
+      body.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Leaderboard load failed:', error);
+    status.dataset.state = 'error';
+    status.textContent = leaderboardWords[language].loadError;
+    addLeaderboardMessageRow(body, leaderboardWords[language].loadError);
+  }
+}
+function addLeaderboardMessageRow(body, message) {
+  const row = document.createElement('tr');
+  const cell = document.createElement('td');
+  cell.colSpan = 5;
+  cell.className = 'leaderboard-empty';
+  cell.textContent = message;
+  row.appendChild(cell);
+  body.appendChild(row);
+}
+async function saveScoreToLeaderboard() {
+  const words = leaderboardWords[language];
+  setScoreSaveStatus(words.saving);
+  try {
+    const response = await fetch('/api/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        playerName, score, correctAnswers, totalQuestions: missions[currentMission].questions.length,
+        missionId: currentMission, language
+      })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) throw new Error(payload.error || 'Score save failed');
+    setScoreSaveStatus(leaderboardWords[language].saved, 'success');
+    await loadLeaderboard();
+  } catch (error) {
+    console.error('Score save failed:', error);
+    setScoreSaveStatus(leaderboardWords[language].saveError, 'error');
+  }
 }
 function startGame(index) {
   if (!Number.isInteger(index) || index < 0 || index >= missions.length) index = 0;
@@ -321,7 +424,9 @@ function finishGame() {
   setText('final-score', String(score));
   setText('correct-count', `${correctAnswers}/${total}`);
   updateResultText();
+  setScoreSaveStatus(leaderboardWords[language].saving);
   showScreen('result');
+  saveScoreToLeaderboard();
 }
 
 document.getElementById('language-toggle').addEventListener('click', () => {
@@ -350,6 +455,8 @@ document.querySelectorAll('.mission-button').forEach(button => {
 document.getElementById('back-home').addEventListener('click', () => showScreen('home'));
 document.getElementById('next-question').addEventListener('click', nextQuestion);
 document.getElementById('replay').addEventListener('click', () => startGame(currentMission));
-document.getElementById('result-home').addEventListener('click', () => showScreen('home'));
+document.getElementById('result-home').addEventListener('click', () => { showScreen('home'); loadLeaderboard(); });
+document.getElementById('refresh-leaderboard').addEventListener('click', loadLeaderboard);
 
 applyLanguage();
+loadLeaderboard();

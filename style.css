@@ -137,3 +137,27 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
   .status-dot{margin-right:3px}
   .language-toggle{min-width:40px;padding:8px 9px}
 }
+
+
+/* MongoDB leaderboard panel */
+.leaderboard-panel{margin:34px 0 48px;padding:clamp(20px,4vw,30px);border:1px solid var(--border);border-radius:20px;background:linear-gradient(140deg,#14221a,#111715);box-shadow:0 20px 50px #0002}
+.leaderboard-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:17px}
+.leaderboard-heading h2{font-size:25px;margin:7px 0 4px}
+.leaderboard-subtitle{font-size:12px;margin:0}
+.leaderboard-status{min-height:1.5em;color:var(--muted);font-size:12px;margin:12px 0}
+.leaderboard-table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+.leaderboard-table{border-collapse:collapse;width:100%;min-width:560px;text-align:left;background:#0d1410}
+.leaderboard-table th{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);background:#18251d}
+.leaderboard-table th,.leaderboard-table td{padding:14px 16px;border-bottom:1px solid #26372d}
+.leaderboard-table td{font-size:12px;color:var(--text)}
+.leaderboard-table tbody tr:last-child td{border-bottom:0}
+.leaderboard-table tbody tr:hover{background:#17251c}
+.leaderboard-table tbody tr:first-child td:first-child{color:var(--accent);font-weight:900}
+.leaderboard-rank{font-weight:900;color:var(--muted);width:55px}
+.leaderboard-player{font-weight:800;max-width:220px;overflow-wrap:anywhere}
+.leaderboard-score{font-weight:900;color:var(--accent)!important;font-variant-numeric:tabular-nums}
+.leaderboard-empty{text-align:center!important;color:var(--muted)!important;padding:28px!important}
+.score-save-status{min-height:1.5em;font-size:12px;line-height:1.6;color:var(--muted)}
+.score-save-status.success{color:var(--accent)}
+.score-save-status.error{color:#ffb0b0}
+@media(max-width:600px){.leaderboard-heading{align-items:flex-start;flex-direction:column}.leaderboard-heading .button{width:100%}.leaderboard-panel{padding:18px}}

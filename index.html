@@ -5,148 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Grafik Digital Quest — permainan pembelajaran interaktif untuk Asas Grafik Digital.">
   <title>Grafik Digital Quest</title>
-  <style>
-/* Grafik Digital Quest — animated theme */
-:root {
-  --background:#090d0c; --panel:#121a17; --panel2:#1a2420;
-  --text:#f2fff7; --muted:#a5b8ad; --accent:#a3ffcb;
-  --border:#2b4437; --danger:#ff8e9a;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;min-height:100vh;color:var(--text);
-  background:radial-gradient(ellipse at 15% 5%,#173c2b 0,transparent 30%),
-             radial-gradient(ellipse at 90% 20%,#18313a 0,transparent 28%),var(--background);
-  font-family:Inter,"Segoe UI",Arial,sans-serif;overflow-x:hidden
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;
-  background-image:radial-gradient(#a3ffcb 1px,transparent 1px);
-  background-size:34px 34px;animation:star-drift 35s linear infinite
-}
-@keyframes star-drift{from{background-position:0 0}to{background-position:120px 240px}}
-@keyframes fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-13px) rotate(3deg)}}
-@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 #a3ffcb00}50%{box-shadow:0 0 28px #a3ffcb22}}
-@keyframes pop{0%{transform:scale(.92)}70%{transform:scale(1.035)}100%{transform:scale(1)}}
-@keyframes correct-flash{0%{box-shadow:0 0 0 #a3ffcb00}50%{box-shadow:0 0 26px #a3ffcb55}100%{box-shadow:0 0 0 #a3ffcb00}}
-button,a{font:inherit}
-button{cursor:pointer}
-button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.site-header{min-height:76px;padding:16px max(5%,calc((100% - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid #2b4437;background:#090d0cdd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
-.brand{display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;font-weight:800;letter-spacing:1px;font-size:13px}
-.brand strong{color:var(--accent)}
-.brand-mark{display:grid;place-items:center;width:39px;height:39px;border-radius:11px;background:var(--accent);color:#0b1710;font-weight:900}
-.header-pill{border:1px solid #355744;border-radius:30px;padding:8px 12px;font-size:10px;letter-spacing:1px;color:var(--accent);white-space:nowrap}
-.status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:7px;box-shadow:0 0 12px var(--accent);animation:blink 1.8s infinite}
-@keyframes blink{50%{opacity:.3}}
-.container{width:min(1120px,90%);margin:0 auto;padding:46px 0 70px}
-.screen{display:none}.screen.active{display:block;animation:fade-up .45s ease both}
-.hero{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;margin-bottom:66px}
-.eyebrow{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:2.5px}
-.hero h1{font-size:clamp(42px,6vw,72px);line-height:1.02;letter-spacing:-2.8px;margin:18px 0}
-.hero h1 span{color:var(--accent);text-shadow:0 0 28px #a3ffcb33}
-.hero-description{color:var(--muted);max-width:520px;line-height:1.8;font-size:15px;margin-bottom:27px}
-.button{border:1px solid transparent;border-radius:10px;padding:13px 18px;font-weight:750;transition:transform .2s,background .2s,border-color .2s,box-shadow .2s}
-.button:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 9px 24px #0005}
-.button-primary{background:var(--accent);color:#0b1710}
-.button-primary:hover:not(:disabled){background:#c4ffdc;box-shadow:0 0 25px #a3ffcb33}
-.button-secondary{background:var(--panel2);color:var(--text);border-color:var(--border)}
-.button-secondary:hover:not(:disabled){border-color:var(--accent)}
-.button:disabled{cursor:not-allowed;opacity:.4}
-.hero-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:23px;font-size:11px;color:var(--muted)}
-.hero-visual{min-height:330px;position:relative;display:grid;place-items:center;border:1px solid #2b4938;border-radius:25px;overflow:hidden;background:linear-gradient(145deg,#182a20,#101a1a 70%);animation:pulse-glow 5s infinite}
-.orbit{position:absolute;border:1px solid #385846;border-radius:50%;transform:rotate(-22deg)}
-.orbit-one{width:330px;height:190px}.orbit-two{width:250px;height:280px;transform:rotate(35deg)}
-.monitor{width:220px;position:relative;z-index:2;filter:drop-shadow(0 15px 28px #0008);animation:float 4.5s ease-in-out infinite}
-.monitor-top{height:15px;background:#434b4b;border-radius:9px 9px 0 0;padding:5px 8px;display:flex;gap:4px}
-.monitor-top span{width:4px;height:4px;border-radius:50%;background:#9ca9a4}
-.monitor-screen{height:143px;position:relative;overflow:hidden;border:6px solid #434b4b;background:linear-gradient(#253e38,#9dc4a7)}
-.screen-sun{position:absolute;width:35px;height:35px;border-radius:50%;background:#d9ffb0;top:20px;right:28px;box-shadow:0 0 24px #d9ffb088}
-.screen-mountain{position:absolute;bottom:0;width:0;height:0;border-left:100px solid transparent;border-right:100px solid transparent}
-.mountain-one{left:-40px;border-bottom:83px solid #3c8065}.mountain-two{right:-65px;border-bottom:110px solid #245542}
-.screen-line{position:absolute;height:3px;bottom:15px;width:100%;background:#d8f8df88}
-.monitor-neck{height:23px;width:28px;margin:auto;background:#454e4b}.monitor-base{height:9px;width:80px;margin:auto;border-radius:5px;background:#59615e}
-.floating-icon{position:absolute;z-index:3;display:grid;place-items:center;width:53px;height:53px;border-radius:15px;background:#202c26;border:1px solid #3c624b;font-size:25px;box-shadow:0 10px 20px #0004;animation:float 4s ease-in-out infinite}
-.icon-camera{top:42px;left:13%;animation-delay:-.8s}.icon-pencil{right:12%;top:75px;animation-delay:-2s}.icon-image{bottom:52px;left:13%;animation-delay:-1.4s}
-.visual-caption{position:absolute;bottom:18px;right:20px;color:var(--accent);font-size:8px;letter-spacing:2px}
-.section-heading{display:flex;justify-content:space-between;align-items:end;gap:18px}
-.section-heading h2,.learning-panel h2{margin:7px 0 0;font-size:25px}
-.muted{color:var(--muted);line-height:1.7}.section-heading>.muted{font-size:12px}
-.mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin:22px 0 45px}
-.mission-card{background:linear-gradient(145deg,#16221b,#111715);border:1px solid var(--border);border-radius:18px;padding:23px;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden}
-.mission-card::after{content:"";position:absolute;top:-70%;left:-50%;width:45%;height:250%;background:linear-gradient(90deg,transparent,#ffffff0a,transparent);transform:rotate(25deg);transition:left .6s;pointer-events:none}
-.mission-card:hover{transform:translateY(-7px) scale(1.01);border-color:#75bc91;box-shadow:0 18px 40px #0004}
-.mission-card:hover::after{left:130%}
-.mission-top{display:flex;justify-content:space-between;align-items:center}.mission-icon{font-size:30px;display:inline-block;transition:transform .25s}.mission-card:hover .mission-icon{transform:rotate(-10deg) scale(1.18)}
-.mission-number{font-size:10px;color:var(--accent);letter-spacing:1.5px;font-weight:800}
-.mission-card h3{margin:19px 0 9px;font-size:18px}.mission-card p{min-height:78px;color:var(--muted);line-height:1.7;font-size:12px}
-.mission-button{width:100%;display:flex;justify-content:space-between;align-items:center}
-.learning-panel{display:flex;gap:20px;padding:26px;border:1px solid #2b4938;border-radius:18px;background:linear-gradient(120deg,#14221a,#131a18)}
-.learning-icon{font-size:35px}.learning-panel ul{color:var(--muted);line-height:2;padding-left:19px;font-size:13px}.learning-panel li strong{color:var(--accent)}
-.text-button{border:0;background:none;color:var(--muted);padding:7px 0}.text-button:hover{color:var(--accent)}
-.game-status{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;margin:25px 0 24px}
-.status-card{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--border);padding:14px 16px;border-radius:12px}
-.status-card span{color:var(--muted);font-size:9px;letter-spacing:1.5px}.status-card strong{color:var(--accent);font-size:15px}
-.progress-info{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;letter-spacing:1px}
-.progress-track{height:6px;background:#252b2c;border-radius:20px;overflow:hidden;margin:12px 0 27px}
-.progress-bar{width:0;height:100%;background:linear-gradient(90deg,#61d99a,var(--accent));border-radius:inherit;transition:width .5s ease;box-shadow:0 0 15px #a3ffcb66}
-.question-card{max-width:780px;margin:0 auto;padding:clamp(22px,5vw,38px);border:1px solid var(--border);background:linear-gradient(145deg,#141e18,#111715);border-radius:21px;box-shadow:0 20px 55px #0003}
-.question-label{font-size:10px;color:var(--accent);font-weight:800;letter-spacing:1.8px}
-.question-card h2{font-size:clamp(21px,3.5vw,30px);line-height:1.45;margin:18px 0 25px}
-.answer-list{display:grid;gap:11px}
-.answer-option{width:100%;display:flex;gap:13px;align-items:center;text-align:left;color:var(--text);border:1px solid #343f38;border-radius:11px;background:var(--panel2);padding:15px;line-height:1.5;transition:transform .18s,border-color .18s,background .18s}
-.answer-option:hover:not(:disabled){border-color:var(--accent);background:#1c2a23;transform:translateX(5px)}
-.answer-letter{display:grid;place-items:center;flex:0 0 29px;height:29px;border:1px solid #424c48;border-radius:8px;font-size:12px;color:var(--muted)}
-.answer-option.correct{border-color:var(--accent);background:#173526;animation:correct-flash .7s ease}
-.answer-option.correct .answer-letter{background:var(--accent);color:#0b1710;border-color:var(--accent)}
-.answer-option.wrong{border-color:var(--danger);background:#382125;animation:shake .3s ease}
-@keyframes shake{25%,75%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
-.answer-option:disabled{cursor:default}
-.feedback{display:none;margin-top:17px;padding:14px;border-radius:10px;font-size:13px;line-height:1.7}
-.feedback.show{display:block;animation:fade-up .25s ease}.feedback.good{background:#173526;color:#c2ffda}.feedback.bad{background:#382125;color:#ffd0d0}
-.question-footer{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:22px}.question-footer .muted{font-size:11px}
-.result-card{max-width:580px;margin:15px auto;padding:40px 28px;text-align:center;border:1px solid var(--border);border-radius:23px;background:var(--panel);animation:pop .45s ease}
-.result-medal{font-size:65px;margin-bottom:12px;animation:float 3s ease-in-out infinite}
-.result-card h1{font-size:39px;margin:10px 0}.result-score{font-size:62px;font-weight:900;color:var(--accent);margin-top:22px}
-.result-score-label{color:var(--muted);font-size:10px;letter-spacing:2px}
-.result-stats{display:flex;justify-content:space-between;margin:25px 0;padding:16px;background:var(--panel2);border-radius:10px;font-size:13px}
-.result-stats strong{color:var(--accent)}.result-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-.site-footer{display:flex;justify-content:space-between;gap:15px;padding:24px 5%;border-top:1px solid var(--border);color:var(--muted);font-size:10px;letter-spacing:.8px}
-@media(max-width:760px){.container{padding-top:30px}.hero{grid-template-columns:1fr;gap:27px;margin-bottom:45px}.hero-visual{min-height:270px}.mission-grid{grid-template-columns:1fr}.mission-card p{min-height:auto}.section-heading{align-items:start;flex-direction:column;gap:4px}.game-status{grid-template-columns:1fr 1fr}.status-card:first-child{grid-column:1/-1}.question-footer{align-items:stretch;flex-direction:column}.question-footer .button{width:100%}.learning-panel{padding:20px}.site-footer{flex-direction:column;text-align:center}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
-
-.name-card{max-width:590px;margin:24px auto;padding:clamp(25px,5vw,44px);text-align:center;border:1px solid var(--border);border-radius:24px;background:linear-gradient(145deg,#17241c,#111715);animation:fade-up .45s ease}
-.name-avatar{font-size:54px;animation:float 3.5s ease-in-out infinite;margin-bottom:16px}
-.name-card h1{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:14px 0}
-.name-card h1 span{color:var(--accent)}
-.name-card form{display:grid;gap:12px;text-align:left;max-width:420px;margin:24px auto 0}
-.name-card label{font-size:10px;font-weight:800;letter-spacing:1.8px;color:var(--accent)}
-#player-name{width:100%;padding:15px;border:1px solid #3a4d41;border-radius:11px;background:#0b110e;color:var(--text);font:inherit}
-#player-name:focus{outline:2px solid var(--accent);outline-offset:2px}
-.form-error{color:#ff8585;font-size:12px;min-height:0;margin:0}
-.player-greeting,.result-player{font-size:12px;color:var(--muted)}
-.player-greeting strong,.result-player strong{color:var(--accent)}
-
-/* Header language control and bilingual additions */
-.header-actions{display:flex;align-items:center;gap:10px}
-.language-toggle{min-width:46px;padding:9px 12px;border:1px solid var(--accent);border-radius:10px;background:#14231a;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.8px;transition:background .2s,color .2s,transform .2s}
-.language-toggle:hover{background:var(--accent);color:#0b1710;transform:translateY(-2px)}
-.player-greeting{margin:8px 0 0}
-#begin-game{width:100%;text-align:center;justify-content:center}
-#result-player{margin:12px 0 0}
-@media(max-width:600px){
-  .site-header{padding-left:5%;padding-right:5%;gap:10px}
-  .brand{font-size:10px;gap:7px;letter-spacing:.5px}
-  .brand-mark{width:34px;height:34px;flex:0 0 34px}
-  .header-actions{gap:6px}
-  .header-pill{font-size:8px;padding:7px 8px;letter-spacing:.4px}
-  .status-dot{margin-right:3px}
-  .language-toggle{min-width:40px;padding:8px 9px}
-}
-
-  </style>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./game.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -216,6 +76,32 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
           </ul>
         </div>
       </section>
+
+      <section class="leaderboard-panel" id="leaderboard-section" aria-labelledby="leaderboard-title">
+        <div class="leaderboard-heading">
+          <div>
+            <p class="eyebrow" id="leaderboard-eyebrow">PAPAN KEDUDUKAN</p>
+            <h2 id="leaderboard-title">Top 10 pemain</h2>
+            <p class="muted leaderboard-subtitle" id="leaderboard-description">Skor terbaik daripada permainan yang telah selesai.</p>
+          </div>
+          <button class="button button-secondary" id="refresh-leaderboard" type="button">↻ Muat semula</button>
+        </div>
+        <p class="leaderboard-status" id="leaderboard-status" role="status" aria-live="polite">Memuatkan leaderboard...</p>
+        <div class="leaderboard-table-wrap">
+          <table class="leaderboard-table">
+            <thead><tr>
+              <th scope="col" id="lb-head-rank">#</th>
+              <th scope="col" id="lb-head-player">Pemain</th>
+              <th scope="col" id="lb-head-score">Skor</th>
+              <th scope="col" id="lb-head-correct">Betul</th>
+              <th scope="col" id="lb-head-mission">Misi</th>
+            </tr></thead>
+            <tbody id="leaderboard-body">
+              <tr><td class="leaderboard-empty" colspan="5">Belum ada skor.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </section>
 
     <section id="name-screen" class="screen" aria-labelledby="name-title">
@@ -263,6 +149,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
         <h1 id="result-title">Tahniah!</h1>
         <p class="muted" id="result-message">Anda telah menamatkan cabaran.</p>
         <p class="result-player" id="result-player"></p>
+        <p class="score-save-status" id="score-save-status" role="status" aria-live="polite"></p>
         <div class="result-score" id="final-score">0</div>
         <p class="result-score-label" id="result-score-label">JUMLAH MATA</p>
         <div class="result-stats"><span id="result-correct-label">Jawapan betul</span><strong id="correct-count">0/5</strong></div>
@@ -275,363 +162,5 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
   </main>
 
   <footer class="site-footer"><span>GRAFIK DIGITAL QUEST</span><span id="footer-description">Permainan pembelajaran · Topik 1.2</span></footer>
-  <script>
-'use strict';
-
-const missions = [
-  {
-    name: { ms: 'Pencari Grafik', en: 'Graphic Explorer' },
-    label: { ms: '1.2.1 · SUMBER PEMEROLEHAN BAHAN GRAFIK', en: '1.2.1 · SOURCES OF GRAPHIC MATERIALS' },
-    description: { ms: 'Kenal pasti sumber pemerolehan bahan grafik seperti fotografi, laman web dan lukisan digital.', en: 'Identify sources of graphic materials such as photography, websites, and digital drawings.' },
-    questions: [
-      { q: { ms: 'Yang manakah sumber pemerolehan bahan grafik melalui penghasilan imej sendiri?', en: 'Which source produces graphic material by creating your own image?' }, a: [
-        { ms: 'Fotografi', en: 'Photography' }, { ms: 'Papan kekunci', en: 'Keyboard' }, { ms: 'Pembesar suara', en: 'Speaker' }, { ms: 'Mikrofon', en: 'Microphone' }
-      ], correct: 0, explain: { ms: 'Fotografi menghasilkan bahan grafik melalui gambar yang diambil menggunakan kamera.', en: 'Photography creates graphic material through pictures taken with a camera.' } },
-      { q: { ms: 'Pereka mencari gambar landskap melalui laman web. Apakah sumber bahan grafik itu?', en: 'A designer finds a landscape image on a website. What is the source of this graphic material?' }, a: [
-        { ms: 'Laman web', en: 'Website' }, { ms: 'Pencetak', en: 'Printer' }, { ms: 'Tablet grafik', en: 'Graphics tablet' }, { ms: 'Monitor', en: 'Monitor' }
-      ], correct: 0, explain: { ms: 'Laman web boleh menjadi sumber bahan grafik. Semak lesen dan hak penggunaan.', en: 'Websites can be a source of graphic material. Check the licence and usage rights.' } },
-      { q: { ms: 'Bagaimanakah lukisan di atas kertas boleh ditukarkan kepada fail imej digital?', en: 'How can a drawing on paper be converted into a digital image file?' }, a: [
-        { ms: 'Menggunakan pembesar suara', en: 'Using a speaker' }, { ms: 'Menggunakan pengimbas', en: 'Using a scanner' }, { ms: 'Menggunakan tetikus sahaja', en: 'Using only a mouse' }, { ms: 'Menggunakan pencetak', en: 'Using a printer' }
-      ], correct: 1, explain: { ms: 'Pengimbas menukarkan imej daripada dokumen fizikal kepada bentuk digital.', en: 'A scanner converts an image from a physical document into digital form.' } },
-      { q: { ms: 'Yang manakah contoh bahan grafik daripada kreativiti pereka sendiri?', en: 'Which is an example of graphic material created from the designer’s own creativity?' }, a: [
-        { ms: 'Lukisan digital', en: 'Digital drawing' }, { ms: 'Kabel rangkaian', en: 'Network cable' }, { ms: 'Pemacu kuasa', en: 'Power supply' }, { ms: 'Papan kekunci', en: 'Keyboard' }
-      ], correct: 0, explain: { ms: 'Lukisan digital dihasilkan menggunakan perisian dan alat digital.', en: 'Digital drawings are created using software and digital tools.' } },
-      { q: { ms: 'Apakah perkara penting sebelum menggunakan gambar daripada internet?', en: 'What should you check before using an image from the internet?' }, a: [
-        { ms: 'Menukar nama fail sahaja', en: 'Only change the file name' }, { ms: 'Memastikan hak cipta dan lesen penggunaan', en: 'Check copyright and usage licence' }, { ms: 'Membuang semua warna', en: 'Remove all colours' }, { ms: 'Mencetak gambar dahulu', en: 'Print the image first' }
-      ], correct: 1, explain: { ms: 'Semak hak cipta, lesen dan kebenaran penggunaan bahan grafik.', en: 'Check copyright, the licence, and permission to use the graphic material.' } }
-    ]
-  },
-  {
-    name: { ms: 'Pakar Perkakasan', en: 'Hardware Specialist' },
-    label: { ms: '1.2.2 · FUNGSI DAN SPESIFIKASI PERKAKASAN', en: '1.2.2 · HARDWARE FUNCTIONS AND SPECIFICATIONS' },
-    description: { ms: 'Pelajari fungsi dan spesifikasi komputer, kamera, pengimbas, pencetak dan tablet grafik.', en: 'Learn the functions and specifications of computers, cameras, scanners, printers, and graphics tablets.' },
-    questions: [
-      { q: { ms: 'Apakah fungsi utama komputer dalam kerja grafik digital?', en: 'What is the main function of a computer in digital graphics work?' }, a: [
-        { ms: 'Memproses dan menyunting imej menggunakan perisian', en: 'Process and edit images using software' }, { ms: 'Mengimbas kertas tanpa peranti tambahan', en: 'Scan paper without any additional device' }, { ms: 'Mengambil gambar tanpa kamera', en: 'Take photographs without a camera' }, { ms: 'Mencetak tanpa peranti output', en: 'Print without an output device' }
-      ], correct: 0, explain: { ms: 'Komputer menjalankan perisian grafik untuk menghasilkan dan menyunting imej.', en: 'A computer runs graphics software to create and edit images.' } },
-      { q: { ms: 'Spesifikasi manakah penting untuk menilai perincian imej kamera digital?', en: 'Which specification is important when assessing the detail captured by a digital camera?' }, a: [
-        { ms: 'Resolusi imej', en: 'Image resolution' }, { ms: 'Bilangan kekunci papan kekunci', en: 'Number of keyboard keys' }, { ms: 'Saiz tetikus', en: 'Mouse size' }, { ms: 'Kelajuan pencetak', en: 'Printer speed' }
-      ], correct: 0, explain: { ms: 'Resolusi mempengaruhi perincian imej; sensor dan lensa turut mempengaruhi kualiti.', en: 'Resolution affects image detail; the sensor and lens also affect image quality.' } },
-      { q: { ms: 'Apakah maksud DPI dalam konteks resolusi pengimbas?', en: 'What does DPI mean in the context of scanner resolution?' }, a: [
-        { ms: 'Dots Per Inch', en: 'Dots Per Inch' }, { ms: 'Digital Photo Input', en: 'Digital Photo Input' }, { ms: 'Data Processing Interface', en: 'Data Processing Interface' }, { ms: 'Display Pixel Internet', en: 'Display Pixel Internet' }
-      ], correct: 0, explain: { ms: 'DPI bermaksud Dots Per Inch, iaitu ukuran ketumpatan titik mengikut konteks peranti.', en: 'DPI means Dots Per Inch, a measure of dot density in the context of the device.' } },
-      { q: { ms: 'Apakah fungsi utama pencetak dalam proses grafik digital?', en: 'What is the main function of a printer in digital graphics?' }, a: [
-        { ms: 'Menghasilkan output imej pada kertas atau media cetak', en: 'Produce image output on paper or print media' }, { ms: 'Mengambil gambar', en: 'Take photographs' }, { ms: 'Menyunting video', en: 'Edit videos' }, { ms: 'Melukis menggunakan stylus', en: 'Draw using a stylus' }
-      ], correct: 0, explain: { ms: 'Pencetak menghasilkan salinan fizikal bahan digital.', en: 'A printer produces a physical copy of digital material.' } },
-      { q: { ms: 'Spesifikasi manakah berkaitan dengan tablet grafik mengesan tekanan stylus?', en: 'Which specification relates to a graphics tablet detecting stylus pressure?' }, a: [
-        { ms: 'Tahap kepekaan tekanan', en: 'Pressure sensitivity levels' }, { ms: 'Kapasiti dulang kertas', en: 'Paper tray capacity' }, { ms: 'Saiz sensor kamera', en: 'Camera sensor size' }, { ms: 'Kelajuan pengimbasan', en: 'Scanning speed' }
-      ], correct: 0, explain: { ms: 'Kepekaan tekanan membolehkan ciri garisan berubah mengikut tekanan stylus.', en: 'Pressure sensitivity allows line characteristics to change according to stylus pressure.' } }
-    ]
-  },
-  {
-    name: { ms: 'Cabaran Pakar', en: 'Expert Challenge' },
-    label: { ms: '1.2.2 · APLIKASI PERKAKASAN', en: '1.2.2 · HARDWARE IN PRACTICE' },
-    description: { ms: 'Aplikasikan pengetahuan dalam situasi sebenar berkaitan penghasilan grafik digital.', en: 'Apply your knowledge to real-life digital graphics situations.' },
-    questions: [
-      { q: { ms: 'Guru mahu mendigitalkan gambar lama dalam album. Peranti manakah paling sesuai?', en: 'A teacher wants to digitise an old photograph in an album. Which device is most suitable?' }, a: [
-        { ms: 'Pengimbas', en: 'Scanner' }, { ms: 'Pencetak', en: 'Printer' }, { ms: 'Pembesar suara', en: 'Speaker' }, { ms: 'Tablet grafik sahaja', en: 'Graphics tablet only' }
-      ], correct: 0, explain: { ms: 'Pengimbas menghasilkan salinan digital daripada gambar fizikal.', en: 'A scanner creates a digital copy of a physical photograph.' } },
-      { q: { ms: 'Pereka mahu melukis ilustrasi terus pada komputer menggunakan stylus. Apakah peranti sesuai?', en: 'A designer wants to draw an illustration on a computer using a stylus. Which device is suitable?' }, a: [
-        { ms: 'Tablet grafik', en: 'Graphics tablet' }, { ms: 'Pencetak laser', en: 'Laser printer' }, { ms: 'Pengimbas dokumen', en: 'Document scanner' }, { ms: 'Kamera keselamatan', en: 'Security camera' }
-      ], correct: 0, explain: { ms: 'Tablet grafik membolehkan input lukisan menggunakan stylus.', en: 'A graphics tablet allows drawing input using a stylus.' } },
-      { q: { ms: 'Komputer perlahan ketika menyunting fail grafik besar. Spesifikasi manakah wajar dinilai?', en: 'A computer is slow when editing large graphics files. Which specifications should be checked?' }, a: [
-        { ms: 'RAM, pemproses dan keupayaan grafik', en: 'RAM, processor, and graphics capability' }, { ms: 'Warna tetikus sahaja', en: 'Mouse colour only' }, { ms: 'Panjang kabel pencetak', en: 'Printer cable length' }, { ms: 'Saiz dulang kertas', en: 'Paper tray size' }
-      ], correct: 0, explain: { ms: 'RAM, CPU, GPU dan storan boleh mempengaruhi prestasi.', en: 'RAM, CPU, GPU, and storage can affect performance.' } },
-      { q: { ms: 'Pereka perlu mencetak poster berwarna. Apakah yang patut dipertimbangkan?', en: 'A designer needs to print a colour poster. What should be considered?' }, a: [
-        { ms: 'Resolusi cetakan, keupayaan warna dan jenis media', en: 'Print resolution, colour capability, and media type' }, { ms: 'Jumlah kekunci papan kekunci', en: 'Number of keyboard keys' }, { ms: 'Saiz mikrofon', en: 'Microphone size' }, { ms: 'Kelajuan pengimbas sahaja', en: 'Scanner speed only' }
-      ], correct: 0, explain: { ms: 'Kualiti poster dipengaruhi resolusi, warna dan media cetak.', en: 'Poster quality is affected by resolution, colour capability, and print media.' } },
-      { q: { ms: 'Jurugambar mahu mengawal kedalaman medan ketika mengambil potret. Tetapan manakah berkaitan?', en: 'A photographer wants to control depth of field in a portrait. Which setting is relevant?' }, a: [
-        { ms: 'Aperture', en: 'Aperture' }, { ms: 'DPI pencetak', en: 'Printer DPI' }, { ms: 'Tekanan stylus', en: 'Stylus pressure' }, { ms: 'Saiz dulang pengimbas', en: 'Scanner tray size' }
-      ], correct: 0, explain: { ms: 'Aperture mempengaruhi kedalaman medan bersama jarak subjek dan ciri lensa.', en: 'Aperture affects depth of field, along with subject distance and lens characteristics.' } }
-    ]
-  }
-];
-
-const ui = {
-  ms: {
-    headerMode: 'MOD PEMBELAJARAN', heroEyebrow: 'TOPIK 1.2 · ASAS GRAFIK DIGITAL', heroTitle: 'Teroka dunia<br><span>Grafik Digital.</span>', heroDescription: 'Selesaikan misi, kenal pasti sumber bahan grafik dan kuasai perkakasan yang digunakan dalam penghasilan grafik digital.', start: 'Mula Bermain <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Misi', metaQuestions: '✦ 15 Soalan', metaFree: '✦ Main Percuma', chooseEyebrow: 'PILIH PENGEMBARAAN', chooseTitle: 'Pilih misi anda', chooseDescription: 'Kumpul mata dan uji pengetahuan anda.', missionButton: 'Mula Misi <span>→</span>', learningEyebrow: 'HASIL PEMBELAJARAN', learningTitle: 'Apa yang akan dipelajari?', outcome1: '<strong>1.2.1</strong> Menyenaraikan sumber pemerolehan bahan grafik.', outcome2: '<strong>1.2.2</strong> Menjelaskan fungsi dan spesifikasi perkakasan grafik digital.', outcome3: 'Mengenal pasti komputer, kamera digital, pengimbas, pencetak dan tablet grafik.', nameBack: '← Kembali ke menu utama', nameEyebrow: 'SEDIA UNTUK BERMAIN?', nameTitle: 'Masukkan nama<br><span>pemain.</span>', nameDescription: 'Nama anda akan dipaparkan pada skrin permainan dan keputusan.', nameLabel: 'NAMA PEMAIN', namePlaceholder: 'Contoh: Aina', nameError: 'Sila masukkan nama sebelum bermain.', beginGame: 'Teruskan ke permainan →', backHome: '← Kembali ke menu utama', statusMission: 'MISI', statusScore: 'SKOR', statusLives: 'NYAWA', questionHint: 'Pilih satu jawapan yang paling tepat.', next: 'Seterusnya →', seeResults: 'Lihat Keputusan →', resultEyebrow: 'MISI SELESAI', resultTitle: 'Tahniah!', resultMessage: 'Anda telah menamatkan cabaran.', resultScoreLabel: 'JUMLAH MATA', resultCorrectLabel: 'Jawapan betul', replay: 'Main Semula ↻', resultHome: 'Menu Utama', footer: 'Permainan pembelajaran · Topik 1.2', questionCounter: (n,total)=>`SOALAN ${n} / ${total}`, player: n=>`Pemain: <strong>${n}</strong>`, resultPlayer:n=>`Keputusan untuk <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Betul! ${explanation}`, wrongFeedback: explanation=>`✗ Belum tepat. ${explanation}`, correctHint: '+10 mata', wrongHint: 'Semak penerangan dan teruskan!', perfectTitle: 'Hebat sekali!', perfectMessage: 'Sempurna! Semua jawapan betul.', goodTitle: 'Misi berjaya!', goodMessage: 'Bagus! Teruskan latihan untuk kuasai semua konsep.', retryTitle: 'Terus mencuba!', retryMessage: 'Ulang kaji penerangan jawapan dan cuba sekali lagi.', missionNumber: n=>`MISI 0${n+1}`, questionLabel: 'Soalan akan dipaparkan di sini.'
-  },
-  en: {
-    headerMode: 'LEARNING MODE', heroEyebrow: 'TOPIC 1.2 · DIGITAL GRAPHICS BASICS', heroTitle: 'Explore the world of<br><span>Digital Graphics.</span>', heroDescription: 'Complete missions, identify sources of graphic materials, and learn about the hardware used to create digital graphics.', start: 'Start Playing <span aria-hidden="true">↗</span>', metaMissions: '✦ 3 Missions', metaQuestions: '✦ 15 Questions', metaFree: '✦ Free to Play', chooseEyebrow: 'CHOOSE YOUR ADVENTURE', chooseTitle: 'Choose a mission', chooseDescription: 'Earn points and test your knowledge.', missionButton: 'Start Mission <span>→</span>', learningEyebrow: 'LEARNING OUTCOMES', learningTitle: 'What will you learn?', outcome1: '<strong>1.2.1</strong> List sources for obtaining graphic materials.', outcome2: '<strong>1.2.2</strong> Explain the functions and specifications of digital graphics hardware.', outcome3: 'Identify computers, digital cameras, scanners, printers, and graphics tablets.', nameBack: '← Back to main menu', nameEyebrow: 'READY TO PLAY?', nameTitle: 'Enter your<br><span>player name.</span>', nameDescription: 'Your name will appear on the game and results screens.', nameLabel: 'PLAYER NAME', namePlaceholder: 'e.g. Alex', nameError: 'Please enter your name before playing.', beginGame: 'Continue to game →', backHome: '← Back to main menu', statusMission: 'MISSION', statusScore: 'SCORE', statusLives: 'LIVES', questionHint: 'Choose the most accurate answer.', next: 'Next →', seeResults: 'View Results →', resultEyebrow: 'MISSION COMPLETE', resultTitle: 'Congratulations!', resultMessage: 'You have completed the challenge.', resultScoreLabel: 'TOTAL SCORE', resultCorrectLabel: 'Correct answers', replay: 'Play Again ↻', resultHome: 'Main Menu', footer: 'Learning game · Topic 1.2', questionCounter: (n,total)=>`QUESTION ${n} / ${total}`, player: n=>`Player: <strong>${n}</strong>`, resultPlayer:n=>`Results for <strong>${n}</strong>`, correctFeedback: explanation=>`✓ Correct! ${explanation}`, wrongFeedback: explanation=>`✗ Not quite. ${explanation}`, correctHint: '+10 points', wrongHint: 'Review the explanation and continue!', perfectTitle: 'Outstanding!', perfectMessage: 'Perfect! Every answer is correct.', goodTitle: 'Mission complete!', goodMessage: 'Well done! Keep practising to master every concept.', retryTitle: 'Keep trying!', retryMessage: 'Review the explanations and give it another try.', missionNumber: n=>`MISSION 0${n+1}`, questionLabel: 'Your question will appear here.'
-  }
-};
-
-const screens = {
-  home: document.getElementById('home-screen'),
-  name: document.getElementById('name-screen'),
-  game: document.getElementById('game-screen'),
-  result: document.getElementById('result-screen')
-};
-let language = 'ms';
-let pendingMission = 0;
-let currentMission = 0;
-let currentQuestion = 0;
-let score = 0;
-let lives = 3;
-let correctAnswers = 0;
-let hasAnswered = false;
-let playerName = '';
-let currentOptions = [];
-let selectedOptionIndex = -1;
-
-function textFor(value) {
-  return typeof value === 'string' ? value : value[language];
-}
-function showScreen(name) {
-  if (!screens[name]) return;
-  Object.values(screens).forEach(screen => screen.classList.remove('active'));
-  screens[name].classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function shuffle(array) {
-  const result = [...array];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
-}
-function setText(id, value) {
-  const element = document.getElementById(id);
-  if (element) element.textContent = value;
-}
-function setHTML(id, value) {
-  const element = document.getElementById(id);
-  if (element) element.innerHTML = value;
-}
-function applyLanguage() {
-  const words = ui[language];
-  document.documentElement.lang = language === 'ms' ? 'ms' : 'en';
-  document.getElementById('language-toggle').textContent = language === 'ms' ? 'EN' : 'BM';
-  document.getElementById('language-toggle').setAttribute('aria-label', language === 'ms' ? 'Switch to English' : 'Tukar ke Bahasa Melayu');
-  const mappings = {
-    'header-mode': 'headerMode', 'hero-eyebrow': 'heroEyebrow', 'hero-description': 'heroDescription',
-    'meta-missions': 'metaMissions', 'meta-questions': 'metaQuestions', 'meta-free': 'metaFree',
-    'choose-eyebrow': 'chooseEyebrow', 'choose-title': 'chooseTitle', 'choose-description': 'chooseDescription',
-    'learning-eyebrow': 'learningEyebrow', 'learning-title': 'learningTitle', 'learning-outcome-1': 'outcome1',
-    'learning-outcome-2': 'outcome2', 'learning-outcome-3': 'outcome3', 'name-eyebrow': 'nameEyebrow',
-    'name-description': 'nameDescription', 'name-label': 'nameLabel', 'name-back': 'nameBack',
-    'back-home': 'backHome', 'status-mission-label': 'statusMission', 'status-score-label': 'statusScore',
-    'status-lives-label': 'statusLives', 'result-eyebrow': 'resultEyebrow', 'result-score-label': 'resultScoreLabel',
-    'result-correct-label': 'resultCorrectLabel', 'replay': 'replay', 'result-home': 'resultHome',
-    'footer-description': 'footer'
-  };
-  Object.entries(mappings).forEach(([id, key]) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (['learning-outcome-1','learning-outcome-2','learning-outcome-3'].includes(id)) el.innerHTML = words[key];
-    else el.textContent = words[key];
-  });
-  setHTML('hero-title', words.heroTitle);
-  setHTML('start-first', words.start);
-  setHTML('name-title', words.nameTitle);
-  setText('choose-title', words.chooseTitle);
-  document.getElementById('player-name').placeholder = words.namePlaceholder;
-  setText('begin-game', words.beginGame);
-  setText('next-question', hasAnswered && currentQuestion === missions[currentMission].questions.length - 1 ? words.seeResults : words.next);
-  setText('question-hint', words.questionHint);
-  setText('result-title', words.resultTitle);
-  setText('result-message', words.resultMessage);
-  setText('mission-name-0', textFor(missions[0].name));
-  setText('mission-name-1', textFor(missions[1].name));
-  setText('mission-name-2', textFor(missions[2].name));
-  setText('mission-desc-0', textFor(missions[0].description));
-  setText('mission-desc-1', textFor(missions[1].description));
-  setText('mission-desc-2', textFor(missions[2].description));
-  for (let i = 0; i < 3; i++) {
-    setText(`mission-label-${i}`, words.missionNumber(i));
-    setHTML(`mission-button-${i}`, words.missionButton);
-  }
-  setText('name-error', '');
-  if (screens.game.classList.contains('active')) renderQuestion(true);
-  if (screens.result.classList.contains('active')) updateResultText();
-}
-function startGame(index) {
-  if (!Number.isInteger(index) || index < 0 || index >= missions.length) index = 0;
-  pendingMission = index;
-  document.getElementById('player-name').value = playerName;
-  setText('name-error', '');
-  showScreen('name');
-  window.setTimeout(() => document.getElementById('player-name').focus(), 100);
-}
-function beginMission() {
-  currentMission = pendingMission;
-  currentQuestion = 0;
-  score = 0;
-  lives = 3;
-  correctAnswers = 0;
-  hasAnswered = false;
-  selectedOptionIndex = -1;
-  currentOptions = [];
-  showScreen('game');
-  renderQuestion();
-}
-function renderQuestion(keepState = false) {
-  const mission = missions[currentMission];
-  const question = mission.questions[currentQuestion];
-  const total = mission.questions.length;
-  if (!keepState || !currentOptions.length) {
-    hasAnswered = false;
-    selectedOptionIndex = -1;
-    currentOptions = shuffle(question.a.map((answer, index) => ({ sourceIndex: index, correct: index === question.correct })));
-  }
-  setText('mission-title', textFor(mission.name));
-  setText('score', String(score));
-  setText('lives', lives ? '♥ '.repeat(lives).trim() : '0');
-  setText('question-counter', ui[language].questionCounter(currentQuestion + 1, total));
-  setText('progress-percent', `${Math.round(currentQuestion / total * 100)}%`);
-  document.getElementById('progress-bar').style.width = `${Math.round(currentQuestion / total * 100)}%`;
-  setText('question-label', textFor(mission.label));
-  setText('question-text', textFor(question.q));
-  setHTML('player-greeting', ui[language].player(escapeHTML(playerName)));
-  const feedback = document.getElementById('feedback');
-  const next = document.getElementById('next-question');
-  const list = document.getElementById('answer-list');
-  feedback.className = 'feedback';
-  feedback.textContent = '';
-  list.replaceChildren();
-  currentOptions.forEach((option, index) => {
-    const button = document.createElement('button');
-    button.className = 'answer-option';
-    button.type = 'button';
-    const letter = document.createElement('span');
-    letter.className = 'answer-letter';
-    letter.textContent = String.fromCharCode(65 + index);
-    const label = document.createElement('span');
-    label.textContent = textFor(question.a[option.sourceIndex]);
-    button.append(letter, label);
-    if (hasAnswered) {
-      button.disabled = true;
-      if (option.correct) button.classList.add('correct');
-      if (index === selectedOptionIndex && !option.correct) button.classList.add('wrong');
-    } else {
-      button.addEventListener('click', () => checkAnswer(index, button));
-    }
-    list.appendChild(button);
-  });
-  next.disabled = !hasAnswered;
-  next.textContent = currentQuestion === total - 1 ? ui[language].seeResults : ui[language].next;
-  setText('question-hint', ui[language].questionHint);
-  if (hasAnswered) {
-    const chosen = currentOptions[selectedOptionIndex];
-    const explanation = textFor(question.explain);
-    if (chosen && chosen.correct) {
-      feedback.className = 'feedback show good';
-      feedback.textContent = ui[language].correctFeedback(explanation);
-      setText('question-hint', ui[language].correctHint);
-    } else {
-      feedback.className = 'feedback show bad';
-      feedback.textContent = ui[language].wrongFeedback(explanation);
-      setText('question-hint', ui[language].wrongHint);
-    }
-  }
-}
-function checkAnswer(index, button) {
-  if (hasAnswered) return;
-  hasAnswered = true;
-  selectedOptionIndex = index;
-  const question = missions[currentMission].questions[currentQuestion];
-  const selected = currentOptions[index];
-  const buttons = [...document.querySelectorAll('.answer-option')];
-  buttons.forEach(item => { item.disabled = true; });
-  const feedback = document.getElementById('feedback');
-  const explanation = textFor(question.explain);
-  if (selected.correct) {
-    score += 10;
-    correctAnswers++;
-    button.classList.add('correct');
-    feedback.className = 'feedback show good';
-    feedback.textContent = ui[language].correctFeedback(explanation);
-    setText('question-hint', ui[language].correctHint);
-  } else {
-    lives = Math.max(0, lives - 1);
-    button.classList.add('wrong');
-    const correctIndex = currentOptions.findIndex(option => option.correct);
-    if (buttons[correctIndex]) buttons[correctIndex].classList.add('correct');
-    feedback.className = 'feedback show bad';
-    feedback.textContent = ui[language].wrongFeedback(explanation);
-    setText('question-hint', ui[language].wrongHint);
-  }
-  setText('score', String(score));
-  setText('lives', lives ? '♥ '.repeat(lives).trim() : '0');
-  document.getElementById('next-question').disabled = false;
-  document.getElementById('next-question').textContent = currentQuestion === missions[currentMission].questions.length - 1 ? ui[language].seeResults : ui[language].next;
-}
-function nextQuestion() {
-  if (!hasAnswered) return;
-  if (currentQuestion < missions[currentMission].questions.length - 1) {
-    currentQuestion++;
-    currentOptions = [];
-    hasAnswered = false;
-    selectedOptionIndex = -1;
-    renderQuestion();
-  } else {
-    finishGame();
-  }
-}
-function updateResultText() {
-  const total = missions[currentMission].questions.length;
-  const percentage = Math.round(correctAnswers / total * 100);
-  let title = ui[language].retryTitle;
-  let message = ui[language].retryMessage;
-  let icon = '🎯';
-  if (percentage === 100) {
-    title = ui[language].perfectTitle;
-    message = ui[language].perfectMessage;
-    icon = '🏆';
-  } else if (percentage >= 60) {
-    title = ui[language].goodTitle;
-    message = ui[language].goodMessage;
-    icon = '🌟';
-  }
-  setText('result-title', title);
-  setText('result-message', message);
-  setText('result-icon', icon);
-  setHTML('result-player', ui[language].resultPlayer(escapeHTML(playerName)));
-}
-function finishGame() {
-  const total = missions[currentMission].questions.length;
-  document.getElementById('progress-bar').style.width = '100%';
-  setText('progress-percent', '100%');
-  setText('final-score', String(score));
-  setText('correct-count', `${correctAnswers}/${total}`);
-  updateResultText();
-  showScreen('result');
-}
-
-document.getElementById('language-toggle').addEventListener('click', () => {
-  language = language === 'ms' ? 'en' : 'ms';
-  applyLanguage();
-});
-document.getElementById('brand-home').addEventListener('click', event => {
-  event.preventDefault();
-  showScreen('home');
-});
-document.getElementById('name-form').addEventListener('submit', event => {
-  event.preventDefault();
-  const value = document.getElementById('player-name').value.trim();
-  if (!value) {
-    setText('name-error', ui[language].nameError);
-    return;
-  }
-  playerName = value.slice(0, 30);
-  beginMission();
-});
-document.getElementById('name-back').addEventListener('click', () => showScreen('home'));
-document.getElementById('start-first').addEventListener('click', () => startGame(0));
-document.querySelectorAll('.mission-button').forEach(button => {
-  button.addEventListener('click', () => startGame(Number(button.dataset.mission)));
-});
-document.getElementById('back-home').addEventListener('click', () => showScreen('home'));
-document.getElementById('next-question').addEventListener('click', nextQuestion);
-document.getElementById('replay').addEventListener('click', () => startGame(currentMission));
-document.getElementById('result-home').addEventListener('click', () => showScreen('home'));
-
-applyLanguage();
-
-  </script>
 </body>
 </html>
