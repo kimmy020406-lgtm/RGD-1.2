@@ -78,6 +78,99 @@ const ui = {
   }
 };
 
+
+const apiDiagnostics = {
+  ms: {
+    API_NOT_FOUND: 'API tidak ditemui (404). Pastikan folder api berada di root projek Vercel dan redeploy projek yang betul.',
+    API_BAD_RESPONSE: 'API tidak memulangkan JSON yang sah. Semak Vercel → Deployments → Function Logs.',
+    API_NETWORK_ERROR: 'Tidak dapat menghubungi API. Periksa sambungan internet dan deployment Vercel.',
+    API_TIMEOUT: 'API mengambil masa terlalu lama untuk menjawab. Cuba lagi dan semak Vercel Function Logs.',
+    MONGODB_URI_MISSING: 'Vercel tidak menemui MONGODB_URI untuk deployment ini. Semak Environment Variables dan redeploy.',
+    MONGODB_URI_PLACEHOLDER: 'MONGODB_URI masih mengandungi placeholder. Gunakan connection string Atlas yang lengkap.',
+    MONGODB_URI_INVALID: 'MONGODB_URI tidak sah. Salin semula URI daripada MongoDB Atlas dan semak aksara khas dalam password.',
+    MONGODB_AUTH_FAILED: 'MongoDB menolak username/password. Semak MONGODB_URI menggunakan password terkini.',
+    MONGODB_PERMISSION_DENIED: 'Pengguna database tiada kebenaran yang diperlukan pada grafik_digital_quest.',
+    MONGODB_DNS_ERROR: 'Nama host MongoDB Atlas tidak dapat ditemui. Semak connection string dan status cluster.',
+    ATLAS_IP_NOT_ALLOWED: 'MongoDB Atlas menyekat rangkaian Vercel. Semak Atlas → Network Access.',
+    ATLAS_NETWORK_OR_TIMEOUT: 'Vercel tidak dapat mencapai cluster MongoDB. Semak Atlas → Network Access dan status cluster.',
+    MONGODB_DB_MISSING: 'Nama database kosong. Tetapkan MONGODB_DB kepada grafik_digital_quest.',
+    MONGODB_CONNECTION_FAILED: 'Sambungan MongoDB gagal. Semak URI, Network Access, status cluster dan Function Logs.',
+    INVALID_JSON: 'Data skor tidak sah. Cuba tamatkan misi semula.',
+    INVALID_BODY: 'Format data skor tidak sah.',
+    PLAYER_NAME_REQUIRED: 'Nama pemain diperlukan. Kembali ke menu dan masukkan nama.',
+    INVALID_SCORE: 'Skor yang dihantar tidak sah.',
+    INVALID_CORRECT_COUNT: 'Bilangan jawapan betul tidak sah.',
+    INCONSISTENT_SCORE: 'Jumlah skor tidak sepadan dengan bilangan jawapan betul.',
+    INVALID_MISSION: 'Nombor misi tidak sah.',
+    UNKNOWN: 'Ralat tidak diketahui. Buka Vercel → Logs untuk maklumat lanjut.'
+  },
+  en: {
+    API_NOT_FOUND: 'API route not found (404). Ensure the api folder is at the Vercel project root and redeploy the correct project.',
+    API_BAD_RESPONSE: 'The API did not return valid JSON. Check Vercel → Deployments → Function Logs.',
+    API_NETWORK_ERROR: 'Could not reach the API. Check your internet connection and Vercel deployment.',
+    API_TIMEOUT: 'The API timed out. Try again and check Vercel Function Logs.',
+    MONGODB_URI_MISSING: 'Vercel cannot find MONGODB_URI for this deployment. Check Environment Variables and redeploy.',
+    MONGODB_URI_PLACEHOLDER: 'MONGODB_URI still contains a placeholder. Use the full Atlas connection string.',
+    MONGODB_URI_INVALID: 'MONGODB_URI is invalid. Copy it again from Atlas and check special characters in the password.',
+    MONGODB_AUTH_FAILED: 'MongoDB rejected the username or password. Check MONGODB_URI uses the latest password.',
+    MONGODB_PERMISSION_DENIED: 'The database user lacks the required permissions on grafik_digital_quest.',
+    MONGODB_DNS_ERROR: 'The MongoDB Atlas hostname could not be resolved. Check the connection string and cluster status.',
+    ATLAS_IP_NOT_ALLOWED: 'MongoDB Atlas is blocking the Vercel network. Check Atlas → Network Access.',
+    ATLAS_NETWORK_OR_TIMEOUT: 'Vercel could not reach the MongoDB cluster. Check Atlas → Network Access and cluster status.',
+    MONGODB_DB_MISSING: 'The database name is empty. Set MONGODB_DB to grafik_digital_quest.',
+    MONGODB_CONNECTION_FAILED: 'MongoDB connection failed. Check the URI, Network Access, cluster status, and Function Logs.',
+    INVALID_JSON: 'The score payload is invalid. Try finishing the mission again.',
+    INVALID_BODY: 'The score payload has an invalid format.',
+    PLAYER_NAME_REQUIRED: 'A player name is required. Return to the menu and enter a name.',
+    INVALID_SCORE: 'The submitted score is invalid.',
+    INVALID_CORRECT_COUNT: 'The number of correct answers is invalid.',
+    INCONSISTENT_SCORE: 'The score does not match the number of correct answers.',
+    INVALID_MISSION: 'The mission number is invalid.',
+    UNKNOWN: 'Unknown error. Open Vercel → Logs for more information.'
+  }
+};
+
+function apiDiagnosticText(code, fallbackKey) {
+  return apiDiagnostics[language][code] || apiDiagnostics[language].UNKNOWN || ui[language][fallbackKey];
+}
+
+async function requestJSON(url, options = {}) {
+  let response;
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), 15000);
+  try {
+    response = await fetch(url, { ...options, cache: 'no-store', signal: controller.signal });
+  } catch (error) {
+    const wrapped = new Error('API request failed');
+    wrapped.apiCode = error?.name === 'AbortError' ? 'API_TIMEOUT' : 'API_NETWORK_ERROR';
+    throw wrapped;
+  } finally {
+    window.clearTimeout(timer);
+  }
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    const wrapped = new Error('API response was not JSON');
+    wrapped.apiCode = response.status === 404 ? 'API_NOT_FOUND' : 'API_BAD_RESPONSE';
+    throw wrapped;
+  }
+
+  if (response.status === 404) {
+    const wrapped = new Error('API route not found');
+    wrapped.apiCode = 'API_NOT_FOUND';
+    throw wrapped;
+  }
+  if (!response.ok || !data || data.ok !== true) {
+    const wrapped = new Error(data?.error || 'API returned an error');
+    wrapped.apiCode = data?.code || (response.status >= 500 ? 'MONGODB_CONNECTION_FAILED' : 'UNKNOWN');
+    wrapped.status = response.status;
+    throw wrapped;
+  }
+  return data;
+}
+
 const screens = {
   home: document.getElementById('home-screen'),
   name: document.getElementById('name-screen'),
@@ -97,8 +190,12 @@ let currentOptions = [];
 let selectedOptionIndex = -1;
 let leaderboardCache = [];
 let leaderboardLoadError = false;
+let leaderboardErrorCode = '';
 let scoreSaveState = '';
-let lastScoreSubmissionKey = ''; 
+let scoreSaveErrorCode = '';
+let currentRunId = 0;
+let lastSubmittedRunId = -1;
+let gameCompleted = false;
 
 function textFor(value) {
   return typeof value === 'string' ? value : value[language];
@@ -183,7 +280,10 @@ function applyLanguage() {
     else if (!leaderboardCache.length) setText('leaderboard-status', ui[language].leaderboardEmpty);
     else setText('leaderboard-status', '');
   }
-  if (scoreSaveState) setText('score-save-status', ui[language][scoreSaveState]);
+  if (scoreSaveState === 'leaderboardSaveFailed' && scoreSaveErrorCode) setText('score-save-status', apiDiagnosticText(scoreSaveErrorCode, 'leaderboardSaveFailed'));
+  else if (scoreSaveState) setText('score-save-status', ui[language][scoreSaveState]);
+  const retryButton = document.getElementById('retry-score');
+  if (retryButton) retryButton.textContent = language === 'ms' ? 'Cuba Simpan Skor Lagi' : 'Retry Saving Score';
 }
 function startGame(index) {
   if (!Number.isInteger(index) || index < 0 || index >= missions.length) index = 0;
@@ -194,6 +294,12 @@ function startGame(index) {
   window.setTimeout(() => document.getElementById('player-name').focus(), 100);
 }
 function beginMission() {
+  currentRunId++;
+  gameCompleted = false;
+  scoreSaveState = '';
+  scoreSaveErrorCode = '';
+  const retryButton = document.getElementById('retry-score');
+  if (retryButton) retryButton.hidden = true;
   currentMission = pendingMission;
   currentQuestion = 0;
   score = 0;
@@ -378,34 +484,44 @@ function renderLeaderboard() {
 async function loadLeaderboard() {
   const status = document.getElementById('leaderboard-status');
   if (status) setText('leaderboard-status', ui[language].leaderboardLoading);
+
   try {
-    const response = await fetch('/api/leaderboard', { method: 'GET', cache: 'no-store', headers: { Accept: 'application/json' } });
-    const data = await response.json();
-    if (!response.ok || !data || data.ok !== true || !Array.isArray(data.leaderboard)) {
-      throw new Error('Leaderboard endpoint returned an error');
-    }
-    leaderboardCache = data.leaderboard;
+    const data = await requestJSON('/api/leaderboard', {
+      method: 'GET',
+      headers: { Accept: 'application/json' }
+    });
+    leaderboardCache = Array.isArray(data.leaderboard) ? data.leaderboard : [];
     leaderboardLoadError = false;
+    leaderboardErrorCode = '';
     renderLeaderboard();
-    // The table itself displays the empty-state message, avoiding duplicate text.
     if (status) setText('leaderboard-status', '');
+    return true;
   } catch (error) {
-    console.error('Unable to load leaderboard:', error);
+    console.error('Unable to load leaderboard:', error?.apiCode || 'UNKNOWN', error?.message || error);
     leaderboardCache = [];
     leaderboardLoadError = true;
+    leaderboardErrorCode = error?.apiCode || 'UNKNOWN';
     renderLeaderboard();
-    if (status) setText('leaderboard-status', ui[language].leaderboardLoadFailed);
+    if (status) setText('leaderboard-status', apiDiagnosticText(leaderboardErrorCode, 'leaderboardLoadFailed'));
+    return false;
   }
 }
 
-async function saveCompletedScore() {
+async function saveCompletedScore(isRetry = false) {
+  if (lastSubmittedRunId === currentRunId && !isRetry) return;
+  lastSubmittedRunId = currentRunId;
+
   scoreSaveState = 'leaderboardSaving';
-  setText('score-save-status', ui[language][scoreSaveState]);
-  const submissionKey = `${playerName}|${currentMission}|${score}|${correctAnswers}|${Date.now()}`;
-  if (lastScoreSubmissionKey === submissionKey) return;
-  lastScoreSubmissionKey = submissionKey;
+  scoreSaveErrorCode = '';
+  setText('score-save-status', ui[language].leaderboardSaving);
+  const retryButton = document.getElementById('retry-score');
+  if (retryButton) {
+    retryButton.hidden = true;
+    retryButton.disabled = true;
+  }
+
   try {
-    const response = await fetch('/api/score', {
+    const data = await requestJSON('/api/score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
@@ -416,29 +532,41 @@ async function saveCompletedScore() {
         mission: currentMission
       })
     });
-    const data = await response.json();
-    if (!response.ok || !data || data.ok !== true) throw new Error(data && data.error ? data.error : 'Score save failed');
+
+    if (!data.id) console.warn('Score endpoint succeeded without returning an id.');
     scoreSaveState = 'leaderboardSaved';
-    setText('score-save-status', ui[language][scoreSaveState]);
+    scoreSaveErrorCode = '';
+    setText('score-save-status', ui[language].leaderboardSaved);
+    if (retryButton) retryButton.hidden = true;
     await loadLeaderboard();
   } catch (error) {
-    console.error('Unable to save score:', error);
     scoreSaveState = 'leaderboardSaveFailed';
-    setText('score-save-status', ui[language][scoreSaveState]);
+    scoreSaveErrorCode = error?.apiCode || 'UNKNOWN';
+    console.error('Unable to save score:', scoreSaveErrorCode, error?.message || error);
+    setText('score-save-status', apiDiagnosticText(scoreSaveErrorCode, 'leaderboardSaveFailed'));
+    if (retryButton) {
+      retryButton.hidden = false;
+      retryButton.disabled = false;
+    }
   }
 }
 
 function finishGame() {
+  if (gameCompleted) return;
+  gameCompleted = true;
   const total = missions[currentMission].questions.length;
   document.getElementById('progress-bar').style.width = '100%';
   setText('progress-percent', '100%');
   setText('final-score', String(score));
   setText('correct-count', `${correctAnswers}/${total}`);
   scoreSaveState = 'leaderboardSaving';
-  setText('score-save-status', ui[language][scoreSaveState]);
+  scoreSaveErrorCode = '';
+  setText('score-save-status', ui[language].leaderboardSaving);
+  const retryButton = document.getElementById('retry-score');
+  if (retryButton) retryButton.hidden = true;
   updateResultText();
   showScreen('result');
-  saveCompletedScore();
+  void saveCompletedScore();
 }
 
 document.getElementById('language-toggle').addEventListener('click', () => {
@@ -469,6 +597,7 @@ document.getElementById('next-question').addEventListener('click', nextQuestion)
 document.getElementById('replay').addEventListener('click', () => startGame(currentMission));
 document.getElementById('result-home').addEventListener('click', () => { showScreen('home'); loadLeaderboard(); });
 document.getElementById('refresh-leaderboard').addEventListener('click', loadLeaderboard);
+document.getElementById('retry-score').addEventListener('click', () => { void saveCompletedScore(true); });
 
 applyLanguage();
 loadLeaderboard();

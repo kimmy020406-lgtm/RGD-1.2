@@ -155,3 +155,9 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-off
 .leaderboard-empty{text-align:center!important;color:var(--muted)!important;padding:23px!important}
 .score-save-status{min-height:18px;color:var(--accent);font-size:12px;margin:12px 0}
 @media(max-width:600px){.leaderboard-heading{align-items:flex-start;flex-direction:column}.leaderboard-heading .button{width:100%}}
+
+
+/* API retry button and reliable hidden state */
+[hidden] { display: none !important; }
+.score-save-status { overflow-wrap: anywhere; }
+#retry-score { border-color: #7fb98e; }
